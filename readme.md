@@ -36,23 +36,10 @@ After composer update completes, add these lines to your config/app.php file in 
 Run the command below to publish the migrations and config for the billing service.
 
 ```
-    php artisan vendor:publish --force
+    php artisan vendor:publish
     php artisan migrate
 ```
 
-If your billable(user) model will not use the user table, update the the entries in the billing config file to your custom billable model.
-
-```
-    'billable_model'   => 'App\Models\User'
-    'billable_table'   => 'users'
-```
-### Update Middleware Kernel
-
-Add the following entry to your app/Http/Kernel at $routeMiddleWare
-
-```
-    'billing.callback'         => 'App\Http\Middleware\billingVerifyCallbackSignature'
-```
 
 ### Gateway seeder configuration for Stripe for integration
 
@@ -71,21 +58,6 @@ Add the following entries to your app/Console/Kernel file in the array "$command
     'anthonyumpad\billing\Commands\TopupCommand'
 ```
 
-(depending on whether you want to run Top-up or Subcription payments jobs or both).
-
-Add the Billable trait in your User model.
-
-```
-    'use anthonyumpad\billing\Traits\Billable'
-```
-
-Depending on the payment type you are implementing [Subscription or Top-up], add the use line below in your User model.
-
-```
-    'use anthonyumpad\billing\Traits\SubscriptionPayments'
-    'use anthonyumpad\billing\Traits\TopupPayments'
-```
-
 In app/Handlers/Events you may want to add some handlers for the specific events fired by the billing service.
 
 Below are the events that the billing service fires:
@@ -102,9 +74,6 @@ Below are the events that the billing service fires:
     'anthonyumpad\billing\Events\Autocharge\Failed'
     'anthonyumpad\billing\Events\Customer\Create'
     'anthonyumpad\billing\Events\Customer\Delete'
-    'anthonyumpad\billing\Payment\Reconcile'
     'anthonyumpad\billing\Events\Card\Create'
     'anthonyumpad\billing\Events\Card\Delete'
-    'anthonyumpad\billing\Events\Callback\Approved'
-    'anthonyumpad\billing\Events\Callback\Negative'
 ```
