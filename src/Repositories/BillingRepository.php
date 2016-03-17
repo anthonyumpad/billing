@@ -669,6 +669,8 @@ class BillingRepository
             throw new \Exception('Cannot get default gateway.');
         }
 
+        $gateway_id = $gateway->model->id;
+
         $customer   =  Customer::where('billable_id', $billableId)
             ->('gateway_id', $gateway_id)
             ->first();
@@ -788,5 +790,83 @@ class BillingRepository
         }
         Event::fire(new ChargeFailed($this->id, $customer->id, $payment->id, $purchaseDetails));
         throw new \Exception($response_message, $response_code);
+    }
+
+    /**
+     * Refund a Transaction
+     *
+     * @param Payment $transaction
+     * @param float $amount
+     *
+     * @return Refund
+     * @throws \Exception
+     */
+    public function refund($transactionReference, $amount = null, $gateway = null)
+    {
+        $gateway_id = null;
+        // get the default gateway if none is provided
+        if (empty($gateway)) {
+            $app      = app();
+            $gateway  = $app['billing.gateway'];
+        } else {
+            $gateway = Gateway::getGateway($gateway);
+        }
+
+        if (empty($gateway)) {
+            throw new \Exception('Cannot get default gateway.');
+        }
+
+        $gateway_id = $gateway->model->id;
+
+        $transaction = Payment::where('transaction_reference', $transactionReference)
+            ->('gateway_id', $gateway_id)
+            ->first();
+
+        if (empty($transaction)) {
+            throw new \Exception('Cannot find transaction record.');
+        }
+        // check the amount to be refunded based on amount_not_refunded
+        if (empty($amount) || $amount > $transaction->amount_not_refunded) {
+            $refund_amount = $transaction->amount_not_refunded;
+        } else {
+            $refund_amount = $amount;
+        }
+
+        $response = $gateway->refund(array(
+            'amount'                   => number_format($refund_amount, 2, '.', ''),
+            'transactionReference'     => $transaction->transaction_reference,
+        ))->send();
+
+        $billable = $this;
+
+        if ($response->isSuccessful()) {
+
+            // Adjust the purchase transaction to record the non refunded amount
+            $remaining_amount                 = $transaction->amount_not_refunded - $refund_amount;
+            $transaction->status              = ($remaining_amount == 0) ? Payment::REFUNDED : Payment::PARTIAL;
+            $transaction->amount_not_refunded = $remaining_amount;
+            $transaction->save();
+
+            // Save a refund transaction in the database.
+            $response = Refund::create([
+                'billable_id'           => $billable->id,
+                'chargeable_id'         => $transaction->chargeable_id,
+                'payment_id'            => $transaction->id,
+                'paymenttoken_id'       => $transaction->paymenttoken_id,
+                'gateway_id'            => $transaction->gateway_id,
+                'amount'                => $refund_amount,
+                'service'               => $transaction->service,
+                'transaction_date'      => new \DateTime,
+                'transaction_reference' => $response->getTransactionReference(),
+                'transaction_details'   => 'Refund of transaction ID ' . $transaction->transaction_reference,
+                'status'                => Refund::COMPLETED,
+            ]);
+
+            Event::fire(new RefundSuccess($response->id));
+            return $response;
+        }
+
+        Event::fire(new RefundFailed($response->id));
+        throw new \Exception($response->getMessage());
     }
 }

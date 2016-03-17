@@ -42,7 +42,6 @@ class BillingInterface
 
     public function unsubscribe($billableId);
 
-    public function refund($billableId, $transactionReference, $amount);
+    public function refund($transactionReference, $amount, $gateway);
 
-    public function autoCharge();
 }

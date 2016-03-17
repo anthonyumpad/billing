@@ -18,14 +18,6 @@ use Anthonyumpad\Billing\Models\Subscription;
  * SubscriptionPayments Trait to be used in a "Subscription"-esque model for handling
  * recurring payments against a subscription. Application of this trait depends
  * on application of the Billable trait to a related model.
- *
- * The functionality here includes:
- *
- * * charge()   -- Make a purchase transaction against a gateway and record
- *   this against the current model (as purchase.chargeable_id).
- * * refund()   -- Make a refund against a previous purchase transaction.
- * * recur()    -- Mark a subscription as including a recurring payment.
- * * recurOff() -- Turn off a user subscription
  */
 trait SubscriptionTrait
 {
@@ -79,7 +71,7 @@ trait SubscriptionTrait
      *
      * @return void
      */
-    public static function autochargeAttempt()
+   /* public static function autochargeAttempt()
     {
         $recurring = Recurring::where('next_attempt', '<=', new \DateTime)
             ->where('next_attempt', '!=', '0000-00-00 00:00:00')
@@ -93,7 +85,7 @@ trait SubscriptionTrait
             'Recurring', [
             'recurring'    => $recurring,
             'system_date'  => new \DateTime,
-        ]);*/
+        ]);
 
         foreach ($recurring as $recur) {
             $card       = $recur->paymenttoken;
@@ -103,7 +95,7 @@ trait SubscriptionTrait
             /*Log::info(__CLASS__.':'.__TRAIT__.':'.__FILE__.':'.__LINE__.':'.__FUNCTION__.':'.
                 'Recur', [
                 'recur'    => $recur,
-            ]);*/
+            ]);
 
             try {
                 $payment = $billable->charge($card, $recur->recurring_amount, $data, null, true);
@@ -144,7 +136,7 @@ trait SubscriptionTrait
                 }
                 Event::fire(new RecurringFailed($recur->id));
             }
-        }
+        }*/
     }
 
 }

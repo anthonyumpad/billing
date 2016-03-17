@@ -41,8 +41,6 @@ class BillingServiceProvider extends ServiceProvider
         'Anthonyumpad\Billing\Events\Customer\Delete'      => [],
         'Anthonyumpad\Billing\Events\Card\Create'          => [],
         'Anthonyumpad\Billing\Events\Card\Delete'          => [],
-        'Anthonyumpad\Billing\Events\Callback\Approved'    => [],
-        'Anthonyumpad\Billing\Events\Callback\Negative'    => []
     ];
 
     /**
@@ -71,13 +69,6 @@ class BillingServiceProvider extends ServiceProvider
             __DIR__ . '/../src/config/billing.php' => config_path('billing.php'),
         ], 'config');
 
-        $this->publishes([
-            __DIR__ . '/../src/Http/Middleware/BillingVerifyCallbackSignature.php' => app_path('Http/Middleware')
-        ], 'middleware');
-
-        $this->publishes([
-            __DIR__ . '/../src/Http/Routes/Callback.php' => app_path('Http/Routes')
-        ], 'callbacks');
     }
 
     /**

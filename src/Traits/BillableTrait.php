@@ -217,7 +217,7 @@ trait BillableTrait
     /**
      * purchase
      *
-     * This sends the puchse request to the gateway.
+     * This sends the puchase request to the gateway.
      *
      * @param $billabeId
      * @param $puchaseDetails
@@ -235,5 +235,27 @@ trait BillableTrait
         }
 
         return $payment;
+    }
+
+    /**
+     * purchase
+     *
+     * This sends the refund request to the gateway.
+     *
+     * @param $transactionReference
+     * @param $amount
+     * @return Payment $payment
+     *
+     * @throws \Exception
+     */
+    public function refund($transactionReference, $amount, $gateway)
+    {
+        try {
+            $refund = $this->purchase($transactionReference, $amount, $gateway);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
+
+        return $refund;
     }
 }

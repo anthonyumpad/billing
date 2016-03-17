@@ -11,7 +11,6 @@ namespace Anthonyumpad\Billing;
 use Anthonyumpad\Billing\Traits\BillableTrait;
 use Anthonyumpad\Billing\Traits\SubscriptionTrait;
 use Anthonyumpad\Billing\Traits\TopupTrait;
-
 use Anthonyumpad\Billing\Repositories\BillingRepository;
 use Anthonyumpad\Billing\Repositories\SubscriptionRepository;
 use Anthonyumpad\Billing\Repositories\TopupRepository;
