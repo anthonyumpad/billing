@@ -1,0 +1,30 @@
+{
+    "name": "anthonyumpad/billing",
+    "description": "Billing plugin for Stripe.",
+    "keywords": ["laravel", "stripe", "billing"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anthony Umpad",
+            "email": "anthonyumpad@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "laravel/framework": "5.1.*",
+        "illuminate/html": "^5.0",
+        "omnipay/common": "~2.0",
+        "omnipay/stripe": "~2.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "2.0.*@dev",
+        "phpspec/phpspec" : "~2.1",
+        "fzaninotto/faker": "~1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Anthonyumpad\\Billing\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

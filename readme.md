@@ -1,0 +1,110 @@
+## Introduction
+
+The functionality of the billing service is to provide several drop-in traits for billing against both
+customer (user) records and subscription records.
+
+
+## How To Integrate This To Your Project
+
+Add this to your composer.json file:
+
+## Installation
+
+```
+    "require" : {
+        "omnipay/stripe": "~2.0",
+        "anthonyumpad/billing": "~1.*"
+    }
+```
+
+Once that is done, run the composer update command:
+
+```
+    composer update
+```
+
+### Register Service Provider
+
+After composer update completes, add these lines to your config/app.php file in the 'providers' array:
+
+```
+    'anthonyumpad\billing\BillingServiceProvider'
+```
+
+### Publish billing Migrations and Config
+
+Run the command below to publish the migrations and config for the billing service.
+
+```
+    php artisan vendor:publish --force
+    php artisan migrate
+```
+
+If your billable(user) model will not use the user table, update the the entries in the billing config file to your custom billable model.
+
+```
+    'billable_model'   => 'App\Models\User'
+    'billable_table'   => 'users'
+```
+### Update Middleware Kernel
+
+Add the following entry to your app/Http/Kernel at $routeMiddleWare
+
+```
+    'billing.callback'         => 'App\Http\Middleware\billingVerifyCallbackSignature'
+```
+
+### Gateway seeder configuration for Stripe for integration
+
+Stripe requires a apiKey for authenticating transactions.
+Update the billing configuration file for Stripe apiKey at billing.php and run the database seeder
+
+```
+    php artisan db:seed
+```
+
+Add the following entries to your app/Console/Kernel file in the array "$commands":
+
+```
+    'anthonyumpad\billing\Commands\SubscriptionCheckCardExpiryCommand'
+    'anthonyumpad\billing\Commands\SubscriptionCommand'
+    'anthonyumpad\billing\Commands\TopupCommand'
+```
+
+(depending on whether you want to run Top-up or Subcription payments jobs or both).
+
+Add the Billable trait in your User model.
+
+```
+    'use anthonyumpad\billing\Traits\Billable'
+```
+
+Depending on the payment type you are implementing [Subscription or Top-up], add the use line below in your User model.
+
+```
+    'use anthonyumpad\billing\Traits\SubscriptionPayments'
+    'use anthonyumpad\billing\Traits\TopupPayments'
+```
+
+In app/Handlers/Events you may want to add some handlers for the specific events fired by the billing service.
+
+Below are the events that the billing service fires:
+
+```
+    'anthonyumpad\billing\Events\Charge\Success'
+    'anthonyumpad\billing\Events\Charge\Failed'
+    'anthonyumpad\billing\Events\Refund\Success'
+    'anthonyumpad\billing\Events\Refund\Failed'
+    'anthonyumpad\billing\Events\Autocharge\Retry'
+    'anthonyumpad\billing\Events\Autocharge\CardExpire'
+    'anthonyumpad\billing\Events\Autocharge\Defaulted'
+    'anthonyumpad\billing\Events\Autocharge\Success'
+    'anthonyumpad\billing\Events\Autocharge\Failed'
+    'anthonyumpad\billing\Events\Customer\Create'
+    'anthonyumpad\billing\Events\Customer\Delete'
+    'anthonyumpad\billing\Payment\Reconcile'
+    'anthonyumpad\billing\Events\Card\Create'
+    'anthonyumpad\billing\Events\Card\Delete'
+    'anthonyumpad\billing\Events\Callback\Approved'
+    'anthonyumpad\billing\Events\Callback\Negative'
+```
