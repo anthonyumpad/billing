@@ -28,19 +28,19 @@ class BillingServiceProvider extends ServiceProvider
      *
      */
     protected $listen = [
-        'Anthonyumpad\Billing\Events\Charge\Success'       => [],
-        'Anthonyumpad\Billing\Events\Charge\Failed'        => [],
-        'Anthonyumpad\Billing\Events\Refund\Success'       => [],
-        'Anthonyumpad\Billing\Events\Refund\Failed'        => [],
+        'Anthonyumpad\Billing\Events\Charge\Success'        => [],
+        'Anthonyumpad\Billing\Events\Charge\Failed'         => [],
+        'Anthonyumpad\Billing\Events\Refund\Success'        => [],
+        'Anthonyumpad\Billing\Events\Refund\Failed'         => [],
         'Anthonyumpad\Billing\Events\Autocharge\Retry'      => [],
         'Anthonyumpad\Billing\Events\Autocharge\CardExpire' => [],
         'Anthonyumpad\Billing\Events\Autocharge\Defaulted'  => [],
         'Anthonyumpad\Billing\Events\Autocharge\Success'    => [],
         'Anthonyumpad\Billing\Events\Autocharge\Failed'     => [],
-        'Anthonyumpad\Billing\Events\Customer\Create'      => [],
-        'Anthonyumpad\Billing\Events\Customer\Delete'      => [],
-        'Anthonyumpad\Billing\Events\Card\Create'          => [],
-        'Anthonyumpad\Billing\Events\Card\Delete'          => [],
+        'Anthonyumpad\Billing\Events\Customer\Create'       => [],
+        'Anthonyumpad\Billing\Events\Customer\Delete'       => [],
+        'Anthonyumpad\Billing\Events\Card\Create'           => [],
+        'Anthonyumpad\Billing\Events\Card\Delete'           => [],
     ];
 
     /**

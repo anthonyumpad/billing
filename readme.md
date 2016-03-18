@@ -13,8 +13,14 @@ Add this to your composer.json file:
 ```
     "require" : {
         "omnipay/stripe": "~2.0",
-        "anthonyumpad/billing": "~1.*"
-    }
+        "anthonyumpad/billing": "dev-master"
+    },
+    "repositories"  : [
+        {
+            "type": "git",
+            "url": "https://github.com/anthonyumpad/billing.git"
+        }
+    ],
 ```
 
 Once that is done, run the composer update command:
