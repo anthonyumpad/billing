@@ -18,13 +18,13 @@ namespace Anthonyumpad\Billing;
 interface BillingInterface
 {
 
-    public function createCustomer($billableId, $customerData, $gateway);
+    public function createCustomer($billableId, array $customerData, $gateway);
 
     public function getCustomer($billableId, $gateway);
 
     public function deleteCustomer($billableId, $gateway);
 
-    public function createCard($billableId, $cardInfo, $gateway);
+    public function createCard($billableId, array $cardInfo, $gateway);
 
     public function getDefaultCard($billableId);
 
@@ -38,7 +38,7 @@ interface BillingInterface
 
     public function purchase($billableId, $purchaseDetails,$gateway);
 
-    public function subscribe($billableId, $subscriptionData);
+    public function subscribe($billableId, array $subscriptionData);
 
     public function unsubscribe($billableId);
 

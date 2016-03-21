@@ -23,6 +23,21 @@ trait SubscriptionTrait
 {
 
     /**
+     * @var Anthonyumpad/Billing/Repositories/BillingRepository
+     */
+    protected $billingRepository;
+
+    /**
+     * @var Anthonyumpad/Billing/Repositories/SubscriptionRepository
+     */
+    protected $subscriptionRepository;
+
+    /**
+     * @var Anthonyumpad/Billing/Repositories/TopupRepository
+     */
+    protected $topupRepository;
+
+    /**
      * subscribe
      *
      * This creates a subscription record for the billable object.
@@ -52,7 +67,7 @@ trait SubscriptionTrait
      *
      * @return bool
      */
-    public function unsubscribe()
+    public function unsubscribe($billableId)
     {
         try {
             $result = $this->unsubscribe($billableId);
@@ -136,7 +151,7 @@ trait SubscriptionTrait
                 }
                 Event::fire(new RecurringFailed($recur->id));
             }
-        }*/
-    }
+        }
+    }*/
 
 }

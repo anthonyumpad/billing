@@ -20,6 +20,21 @@ trait BillableTrait
 {
 
     /**
+     * @var Anthonyumpad/Billing/Repositories/BillingRepository
+     */
+    protected $billingRepository;
+
+    /**
+     * @var Anthonyumpad/Billing/Repositories/SubscriptionRepository
+     */
+    protected $subscriptionRepository;
+
+    /**
+     * @var Anthonyumpad/Billing/Repositories/TopupRepository
+     */
+    protected $topupRepository;
+
+    /**
      * Create the customer depending on the Gateway provided
      *
      * If a null gateway is provided then this function registers the
