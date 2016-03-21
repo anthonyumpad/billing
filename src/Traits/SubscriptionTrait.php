@@ -21,21 +21,10 @@ use Anthonyumpad\Billing\Models\Subscription;
  */
 trait SubscriptionTrait
 {
-
-    /**
-     * @var Anthonyumpad/Billing/Repositories/BillingRepository
-     */
-    protected $billingRepository;
-
     /**
      * @var Anthonyumpad/Billing/Repositories/SubscriptionRepository
      */
     protected $subscriptionRepository;
-
-    /**
-     * @var Anthonyumpad/Billing/Repositories/TopupRepository
-     */
-    protected $topupRepository;
 
     /**
      * subscribe
@@ -51,7 +40,7 @@ trait SubscriptionTrait
     public function subscribe($billableId, array $subscriptionData)
     {
         try {
-            $subscription = $this->subscribe($billableId, $subscriptionData);
+            $subscription = $this->subscriptionRepository->subscribe($billableId, $subscriptionData);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }
@@ -70,7 +59,7 @@ trait SubscriptionTrait
     public function unsubscribe($billableId)
     {
         try {
-            $result = $this->unsubscribe($billableId);
+            $result = $this->subscriptionRepository->unsubscribe($billableId);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }

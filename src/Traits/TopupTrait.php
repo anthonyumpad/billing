@@ -30,18 +30,5 @@ use Log;
  */
 trait TopupTrait
 {
-    /**
-     * @var Anthonyumpad/Billing/Repositories/BillingRepository
-     */
-    protected $billingRepository;
 
-    /**
-     * @var Anthonyumpad/Billing/Repositories/SubscriptionRepository
-     */
-    protected $subscriptionRepository;
-
-    /**
-     * @var Anthonyumpad/Billing/Repositories/TopupRepository
-     */
-    protected $topupRepository;
 }
