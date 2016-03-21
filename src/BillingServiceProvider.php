@@ -83,6 +83,8 @@ class BillingServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('Billing','\Anthonyumpad\Billing\Billing');
+
         $this->mergeConfigFrom(
             __DIR__ . '/config/billing.php', 'billing'
         );

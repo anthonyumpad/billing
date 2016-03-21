@@ -15,7 +15,7 @@ namespace Anthonyumpad\Billing;
  *
  * @package Anthonyumpad\Billing
  */
-class BillingInterface
+interface BillingInterface
 {
 
     public function createCustomer($billableId, $customerData, $gateway);
