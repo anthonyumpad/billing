@@ -35,8 +35,9 @@ class Billing implements BillingInterface
      * @param SubscriptionRepository $subscriptionRepository
      * @param TopupRepository $topupRepository
      */
-    public function _construct(BillingRepository $billingRepository, SubscriptionRepository $subscriptionRepository, TopupRepository $topupRepository)
+    public function __construct(BillingRepository $billingRepository, SubscriptionRepository $subscriptionRepository, TopupRepository $topupRepository)
     {
+
         $this->billingRepository      = $billingRepository;
         $this->subscriptionRepository = $subscriptionRepository;
         $this->topupRepository        = $topupRepository;

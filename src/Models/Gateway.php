@@ -20,7 +20,7 @@ use Omnipay\Common\AbstractGateway;
  */
 class Gateway extends \Illuminate\Database\Eloquent\Model
 {
-    use SoftDelete;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',

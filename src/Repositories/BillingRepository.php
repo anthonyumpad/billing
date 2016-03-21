@@ -77,7 +77,7 @@ class BillingRepository
 
 
         if (! $response->isSuccessful()) {
-            throw new \Exception($response->getMessage(), $response->getCode());
+            throw new \Exception($response->getMessage());
         }
 
         $customer_reference   = $response->getCustomerReference();
