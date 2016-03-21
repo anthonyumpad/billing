@@ -130,7 +130,7 @@ class SubscriptionRepository
     {
         try {
             $subscription = Subscription::where('billable_id', $billableId)
-                ->('status', Subscription::ACTIVE)
+                ->where('status', Subscription::ACTIVE)
                 ->first();
 
             if(empty($subscription)) {

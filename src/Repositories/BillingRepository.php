@@ -10,8 +10,6 @@ namespace Anthonyumpad\Billing\Repositories;
 
 use Anthonyumpad\Billing\Models\Customer;
 use Anthonyumpad\Billing\Models\Gateway;
-use Anthonyumpad\Billing\Models\Customer;
-use Anthonyumpad\Billing\Models\Gateway;
 use Anthonyumpad\Billing\Models\PaymentToken;
 use Anthonyumpad\Billing\Models\Subscription;
 use Anthonyumpad\Billing\Events\Customer\Create   as CustomerCreate;
@@ -79,7 +77,7 @@ class BillingRepository
 
 
         if (! $response->isSuccessful()) {
-            throw new \Exception($response->getMessage(), $e->getCode());
+            throw new \Exception($response->getMessage(), $response->getCode());
         }
 
         $customer_reference   = $response->getCustomerReference();
@@ -169,7 +167,7 @@ class BillingRepository
 
                 $gateway_id = $gateway->model->id;
                 $customer   = Customer::where('billable_id', $billableId)
-                    ->('gateway_id', $gateway_id)
+                    ->where('gateway_id', $gateway_id)
                     ->first();
 
                 if (empty($customer)) {
@@ -199,7 +197,7 @@ class BillingRepository
         }
 
         $customer   = Customer::where('billable_id', $billableId)
-            ->('gateway_id', $gateway_id)
+            ->where('gateway_id', $gateway_id)
             ->first();
 
         // Check to see that something was found
@@ -272,7 +270,7 @@ class BillingRepository
         }
 
         $customer   =  Customer::where('billable_id', $billableId)
-            ->('gateway_id', $gateway_id)
+            ->where('gateway_id', $gateway_id)
             ->first();
 
         if (empty($customer)) {
@@ -344,7 +342,7 @@ class BillingRepository
         if (empty($customerId)) {
             $default = true;
             try {
-                $customer = $this->createCustomer($billableId, [], $gateway);
+                $customer = $this->createCustomer($billableId, []);
             } catch(\Exception $e) {
                 throw new \Exception($e->getMessage(), $e->getCode());
             }
@@ -375,7 +373,7 @@ class BillingRepository
         $card = new CreditCard($cardInfo);
 
         // Need to expire the card on the last day of the expiry month.
-        $aDate     = $cardInfo['expiryYear'] . '-' . $card_info['expiryMonth'] . '-01';
+        $aDate     = $cardInfo['expiryYear'] . '-' . $cardInfo['expiryMonth'] . '-01';
         $lastDate  = date('Y-m-t', strtotime($aDate));
         $firstName = (! empty($cardInfo['firstName']))  ? $cardInfo['firstName'] : '';
         $lastName  = (! empty($cardInfo['lastName']))   ? $cardInfo['lastName']  : '';
@@ -385,7 +383,7 @@ class BillingRepository
                     'name'    => $firstName . ' ' . $lastName,
                     'number'  => (! empty($cardInfo['number']))       ? substr($cardInfo['number'], -4) : '',
                     'phone'   => (! empty($cardInfo['billingPhone'])) ? $cardInfo['billingPhone']       : '',
-                    'token'   => $response->getCardReference(),
+                    'token'   => $cardReference,
                     'address' => [
                         'street'  => (! empty($cardInfo['billingAddress1'])) ? $cardInfo['billingAddress1'] : '',
                         'city'    => (! empty($cardInfo['billingCity']))     ? $cardInfo['billingCity']     : '',
@@ -478,7 +476,7 @@ class BillingRepository
 
         try {
             $paymentToken = PaymentToken::where('token', $cardReference)
-                ->('billable_id', $billableId)
+                ->where('billable_id', $billableId)
                 ->first();
 
             PaymentToken::where('billable_id', $billableId)->update([
@@ -536,7 +534,7 @@ class BillingRepository
         // Get the payment token model object
         $paymentToken = PaymentToken::with('customer')
             ->where('token', $cardReference)
-            ->('billable_id', $billableId)
+            ->where('billable_id', $billableId)
             ->first();
 
         if (empty($paymentToken)) {
@@ -672,7 +670,7 @@ class BillingRepository
         $gateway_id = $gateway->model->id;
 
         $customer   =  Customer::where('billable_id', $billableId)
-            ->('gateway_id', $gateway_id)
+            ->where('gateway_id', $gateway_id)
             ->first();
 
         if (empty($customer)) {
@@ -690,7 +688,7 @@ class BillingRepository
         $description  = isset($purchaseDetails['description'])  ? $purchaseDetails['description']  : '';
         $packageId    = isset($purchaseDetails['package_id'])   ? $purchaseDetails['package_id']   : '';
         $packageName  = isset($purchaseDetails['package_name']) ? $purchaseDetails['package_name'] : '';
-        $amount       = isset($purchaseDetails['amount'])       ? $purchaseDetails['amount']       : $amount;
+        $amount       = isset($purchaseDetails['amount'])       ? $purchaseDetails['amount']       : '0.00';
         $currency     = isset($purchaseDetails['currency'])     ? $purchaseDetails['currency']     : 'USD';
 
         // Set default purchase options
@@ -723,9 +721,9 @@ class BillingRepository
 
         //Create Payment object here
         $payment                        = new Payment();
-        $payment->billable_id           = $billableId,
-        $payment->chargeable_id         = $packageId,
-        $payment->paymenttoken_id       = (! empty($paymentToken->id))    ? $paymentToken->id   : null,
+        $payment->billable_id           = $billableId;
+        $payment->chargeable_id         = $packageId;
+        $payment->paymenttoken_id       = (! empty($paymentToken->id))    ? $paymentToken->id   : null;
         $payment->gateway_id            = $customer->gateway_id;
         $payment->amount                = $amount;
         $payment->amount_not_refunded   = $amount;
@@ -760,7 +758,6 @@ class BillingRepository
             $payment->gateway_id             = (! empty($response_data['payment']['gateway_id'])) ? $response_data['payment']['gateway_id'] : '';
             $payment->paymenttoken_id        = (isset($paymentToken->id)) ? $paymentToken->id : null;
             $payment->transaction_reference  = $txn_ref;
-            $payment->gateway_processor      = $gateway_processor_name;
             $extended_attributes             = $payment->extended_attributes;
             $extended_attributes['response'] = $response_data;
             $payment->amount_usd             = (! empty($response_data['payment']['product']['price_USD'])) ? $response_data['payment']['product']['price_USD'] : null;
@@ -819,7 +816,7 @@ class BillingRepository
         $gateway_id = $gateway->model->id;
 
         $transaction = Payment::where('transaction_reference', $transactionReference)
-            ->('gateway_id', $gateway_id)
+            ->where('gateway_id', $gateway_id)
             ->first();
 
         if (empty($transaction)) {

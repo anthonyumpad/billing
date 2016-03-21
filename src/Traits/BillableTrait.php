@@ -23,7 +23,7 @@ trait BillableTrait
      * @var Anthonyumpad/Billing/Repositories/BillingRepository
      */
     protected $billingRepository;
-    
+
     /**
      * Create the customer depending on the Gateway provided
      *
