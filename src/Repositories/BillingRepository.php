@@ -548,7 +548,7 @@ class BillingRepository
         $cardCount = PaymentToken::where('billable_id', $billableId)
             ->count();
 
-        if ($paymentToken->is_default && $cardCount > 1) {
+        if ($paymentToken->is_default && $cardCount > 2) {
             throw new \Exception('Cannot delete default card. Please set another card as default.');
         }
 
@@ -589,6 +589,13 @@ class BillingRepository
 
         Event::fire(new CardDelete($billableId, $paymentToken->id));
         $paymentToken->delete();
+
+        // set the last card as default
+        if ($cardCount > 2) {
+            PaymentToken::where('billable_id', $billableId)->update([
+                'is_default' => true
+            ]);
+        }
 
         return true;
     }
