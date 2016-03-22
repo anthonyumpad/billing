@@ -101,7 +101,7 @@ class BillingRepository
      *
      * @param int   $billableId
      * @param AbstractGateway|Fluent|string $gateway
-     * @return Customer
+     * @return Customers
      *
      * @throws Exception
      */
@@ -126,16 +126,15 @@ class BillingRepository
 
         $gateway_id = $gateway->model->id;
 
-        $customer = $customer = $this->customers()
-            ->where('billable_id', $billableId)
+        $customers = Customer::where('billable_id', $billableId)
             ->where('gateway_id', '=', $gateway_id)
-            ->first();
+            ->get();
 
         if( empty($customer)) {
             throw new \Exception('Cannot find customer.');
         }
 
-        return $customer;
+        return $customers;
     }
 
     /**

@@ -29,7 +29,7 @@ class CreateBillingCustomersTable extends Migration {
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->index('user_id');
+            $table->index('billable_id');
         });
     }
 
