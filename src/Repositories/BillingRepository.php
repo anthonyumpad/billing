@@ -397,8 +397,8 @@ class BillingRepository
         ];
 
         $paymentToken = PaymentToken::where('token', $cardReference)
-            ->('billable_id', $billableId)
-            ->('custoemr_id', $customerId)
+            ->where('billable_id', $billableId)
+            ->where('custoemr_id', $customerId)
             ->first();
         if (empty($paymentToken)) {
             try {
@@ -420,7 +420,7 @@ class BillingRepository
         } else {
             try {
                 $paymentToken->extended_attributes = $extendedAttributes;
-                $paymentToken->is_default          = $default,
+                $paymentToken->is_default          = $default;
                 $paymentToken->brand               = $card->getBrand();
                 $paymentToken->billable_id         = $billableId;
                 $paymentToken->customer_id         = $customerId;
