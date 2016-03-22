@@ -62,6 +62,15 @@ class BillingRepository
 
         $gateway_id = $gateway->model->id;
 
+        // search if we already have a record of the customer and return
+        $customer = Customer::where('billable_id', $billableId)
+            ->where('gateway_id', $gateway_id)
+            ->first();
+
+        if (! empty($customer)) {
+            return $customer;
+        }
+
         if (! method_exists($gateway, 'createCustomer')) {
             throw new \Exception('Default gateway does not support customer creation.');
         }
@@ -126,15 +135,15 @@ class BillingRepository
 
         $gateway_id = $gateway->model->id;
 
-        $customers = Customer::where('billable_id', $billableId)
+        $customer = Customer::where('billable_id', $billableId)
             ->where('gateway_id', '=', $gateway_id)
-            ->get();
+            ->first();
 
         if( empty($customer)) {
             throw new \Exception('Cannot find customer.');
         }
 
-        return $customers;
+        return $customer;
     }
 
     /**
