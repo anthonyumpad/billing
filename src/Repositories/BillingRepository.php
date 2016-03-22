@@ -343,22 +343,15 @@ class BillingRepository
      * @param $cardInfo
      * @throws \Exception
      */
-    public function createPaymentToken($billableId, $customerId = null, $cardInfo, $cardReference)
+    public function createPaymentToken($billableId, $customerId = null, $cardInfo, $cardReference, $default = false)
     {
-        $default = false;
-        if (empty($customerId)) {
+        if (empty($billableId) && empty($customerId) && empty($cardInfo) && empty($cardReference)) {
+            throw new (\Exception('Please provide the required data billableId, customerId, cardInfo and cardReference'));
+        }
+
+        $paymentTokenCount = PaymentToken::where('billable_id')->count();
+        if ($paymentTokenCount == 0) {
             $default = true;
-            try {
-                $customer = $this->createCustomer($billableId, []);
-            } catch(\Exception $e) {
-                throw new \Exception($e->getMessage(), $e->getCode());
-            }
-            $customerId = $customer->id;
-        } else {
-            $paymentTokenCount = PaymentToken::where('billable_id')->count();
-            if ($paymentTokenCount == 0) {
-                $default = true;
-            }
         }
 
         $cardInfo = array_merge([
@@ -409,7 +402,7 @@ class BillingRepository
                 $paymentToken = PaymentToken::create([
                     'token'       => $cardReference,
                     'billable_id' => $billableId,
-                    'customer_id' => $customer->Id,
+                    'customer_id' => $customerId,
                     'is_default'  => $default,
                     'extended_attributes' => $extendedAttributes,
                     'brand'               => $card->getBrand(),
@@ -426,7 +419,7 @@ class BillingRepository
                 $paymentToken->extended_attributes = $extendedAttributes;
                 $paymentToken->brand               = $card->getBrand();
                 $paymentToken->billable_id         = $billableId;
-                $paymentToken->customer_id         = $customer->id;
+                $paymentToken->customer_id         = $customerId;
                 $paymentToken->start_date          = new \DateTime();
                 $paymentToken->expiry_date         = new \DateTime($lastDate);
                 $paymentToken->save();
