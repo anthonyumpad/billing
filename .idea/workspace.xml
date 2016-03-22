@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54a2d9ad-568d-42f6-9865-8f2552a07f8f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Traits/BillableTrait.php" afterPath="$PROJECT_DIR$/src/Traits/BillableTrait.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Models/Subscription.php" afterPath="$PROJECT_DIR$/src/Models/Subscription.php" />
     </list>
     <ignored path="billing.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,11 +46,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BillableTrait.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BillableTrait.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Traits/BillableTrait.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46884274">
+            <state vertical-scroll-proportion="-6.1960783">
               <caret line="193" column="58" selection-start-line="193" selection-start-column="58" selection-end-line="193" selection-end-column="58" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Subscription.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Models/Subscription.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.532097">
+              <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -94,16 +103,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-4.2083335">
               <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="36" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2015_02_23_070452_create_billing_refunds_table.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2015_02_23_070452_create_billing_refunds_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="48" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -169,7 +168,6 @@
         <option value="$PROJECT_DIR$/src/Events/Card/Create.php" />
         <option value="$PROJECT_DIR$/database/migrations/2015_02_18_075649_create_billing_paymenttokens_table.php" />
         <option value="$PROJECT_DIR$/src/Models/PaymentToken.php" />
-        <option value="$PROJECT_DIR$/src/Models/Subscription.php" />
         <option value="$PROJECT_DIR$/src/Models/Customer.php" />
         <option value="$PROJECT_DIR$/src/Models/Refund.php" />
         <option value="$PROJECT_DIR$/database/migrations/2015_02_18_084131_create_billing_table_payments.php" />
@@ -188,6 +186,7 @@
         <option value="$PROJECT_DIR$/database/migrations/2015_02_18_074508_create_billing_customers_table.php" />
         <option value="$PROJECT_DIR$/src/Repositories/BillingRepository.php" />
         <option value="$PROJECT_DIR$/src/Traits/BillableTrait.php" />
+        <option value="$PROJECT_DIR$/src/Models/Subscription.php" />
       </list>
     </option>
   </component>
@@ -664,13 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Models/Subscription.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="29" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Models/Payment.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-63.125">
@@ -888,8 +880,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Traits/BillableTrait.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46884274">
+        <state vertical-scroll-proportion="-6.1960783">
           <caret line="193" column="58" selection-start-line="193" selection-start-column="58" selection-end-line="193" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Models/Subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.532097">
+          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
           <folding />
         </state>
       </provider>

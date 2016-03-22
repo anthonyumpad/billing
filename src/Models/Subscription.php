@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Event;
  */
 class Subscription extends \Illuminate\Database\Eloquent\Model
 {
-    use Elocrypt;
-
     const DAY_INTERVAL     = 'DAY';
     const DAYS_INTERVAL    = 'DAYS';
     const WEEK_INTERVAL    = 'WEEK';
