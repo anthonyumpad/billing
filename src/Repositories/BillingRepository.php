@@ -591,7 +591,7 @@ class BillingRepository
         $paymentToken->delete();
 
         // set the last card as default
-        if ($cardCount > 2) {
+        if ($cardCount == 2) {
             PaymentToken::where('billable_id', $billableId)->update([
                 'is_default' => true
             ]);
