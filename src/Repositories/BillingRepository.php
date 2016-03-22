@@ -324,7 +324,7 @@ class BillingRepository
         }
 
         try {
-            $paymentToken = $this->createPaymentToken($billableId, $customer->id, $cardInfo, $response->getCardReference());
+            $paymentToken = $this->createPaymentToken($billableId, $customer->id, $cardInfo, $response->getCardReference(), $default);
         } catch (\Exception $e) {
             throw new \Exception ($e->getMessage(), $e->getCode());
         }
@@ -349,7 +349,7 @@ class BillingRepository
             throw new \Exception('billableId, customerId, cardInfo and cardReference is required.');
         }
 
-        $paymentTokenCount = PaymentToken::where('billable_id')->count();
+        $paymentTokenCount = PaymentToken::where('billable_id', $billableId)->count();
         if ($paymentTokenCount == 0) {
             $default = true;
         }
@@ -398,7 +398,7 @@ class BillingRepository
 
         $paymentToken = PaymentToken::where('token', $cardReference)
             ->where('billable_id', $billableId)
-            ->where('custoemr_id', $customerId)
+            ->where('customer_id', $customerId)
             ->first();
         if (empty($paymentToken)) {
             try {
