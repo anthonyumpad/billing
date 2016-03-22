@@ -136,7 +136,7 @@ class BillingRepository
         $gateway_id = $gateway->model->id;
 
         $customer = Customer::where('billable_id', $billableId)
-            ->where('gateway_id', '=', $gateway_id)
+            ->where('gateway_id', $gateway_id)
             ->first();
 
         if( empty($customer)) {
@@ -277,14 +277,13 @@ class BillingRepository
             throw new \Exception('Gateway does not support create card');
         }
 
-        $customer   =  Customer::where('billable_id', $billableId)
-            ->where('gateway_id', $gateway_id)
-            ->first();
+        $customer = $this->getCustomer($billableId, $gateway);
 
+        $default = false;
         if (empty($customer)) {
             $default = true;
             try {
-                $customer = $this->createCustomer($billableId, [], $gateway);
+                $customer = $this->createCustomer($billableId, ['email' => (! empty($cardInfo['email'])) ? $cardInfo['email'] : ''], $gateway);
             } catch(\Exception $e) {
                 throw new \Exception($e->getMessage(), $e->getCode());
             }
