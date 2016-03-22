@@ -545,6 +545,13 @@ class BillingRepository
             throw new \Exception('Cannot find card.');
         }
 
+        $cardCount = PaymentToken::where('billable_id', $billableId)
+            ->count();
+
+        if ($paymentToken->is_default && $cardCount > 1) {
+            throw new \Exception('Cannot delete default card. Please set another card as default.');
+        }
+
         if (empty($paymentToken->customer)) {
             throw new \Exception('Card has no attached customer record.');
         }
