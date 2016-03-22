@@ -191,7 +191,7 @@ trait BillableTrait
     public function deleteCard($billableId, $cardReference)
     {
         try {
-            $result = $this->billingRepository->getCards($billableId, $cardReference);
+            $result = $this->billingRepository->deleteCard($billableId, $cardReference);
         } catch (\Exception $e) {
             throw new \Exception ($e->getMessage(), $e->getCode());
         }

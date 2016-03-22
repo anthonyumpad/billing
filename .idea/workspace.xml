@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54a2d9ad-568d-42f6-9865-8f2552a07f8f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Repositories/BillingRepository.php" afterPath="$PROJECT_DIR$/src/Repositories/BillingRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Traits/BillableTrait.php" afterPath="$PROJECT_DIR$/src/Traits/BillableTrait.php" />
     </list>
     <ignored path="billing.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,10 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BillingRepository.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BillingRepository.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5341246">
+            <state vertical-scroll-proportion="-7.0588236">
               <caret line="550" column="55" selection-start-line="550" selection-start-column="55" selection-end-line="550" selection-end-column="55" />
               <folding>
                 <element signature="e#133#174#0#PHP" expanded="true" />
@@ -46,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BillableTrait.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BillableTrait.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Traits/BillableTrait.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.9019608">
-              <caret line="89" column="23" selection-start-line="89" selection-start-column="23" selection-end-line="89" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.46884274">
+              <caret line="193" column="58" selection-start-line="193" selection-start-column="58" selection-end-line="193" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -179,7 +180,6 @@
         <option value="$PROJECT_DIR$/src/BillingInterface.php" />
         <option value="$PROJECT_DIR$/src/Traits/TopupTrait.php" />
         <option value="$PROJECT_DIR$/src/Traits/SubscriptionTrait.php" />
-        <option value="$PROJECT_DIR$/src/Traits/BillableTrait.php" />
         <option value="$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php" />
         <option value="$PROJECT_DIR$/src/BillingServiceProvider.php" />
         <option value="$PROJECT_DIR$/src/Billing.php" />
@@ -187,6 +187,7 @@
         <option value="$PROJECT_DIR$/../../../incube8/seeking/database/migrations/2015_02_18_074508_create_billing_customers_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2015_02_18_074508_create_billing_customers_table.php" />
         <option value="$PROJECT_DIR$/src/Repositories/BillingRepository.php" />
+        <option value="$PROJECT_DIR$/src/Traits/BillableTrait.php" />
       </list>
     </option>
   </component>
@@ -460,7 +461,7 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4265625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4265625" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -875,21 +876,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Traits/BillableTrait.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9019608">
-          <caret line="89" column="23" selection-start-line="89" selection-start-column="23" selection-end-line="89" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5341246">
+        <state vertical-scroll-proportion="-7.0588236">
           <caret line="550" column="55" selection-start-line="550" selection-start-column="55" selection-end-line="550" selection-end-column="55" />
           <folding>
             <element signature="e#133#174#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Traits/BillableTrait.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46884274">
+          <caret line="193" column="58" selection-start-line="193" selection-start-column="58" selection-end-line="193" selection-end-column="58" />
+          <folding />
         </state>
       </provider>
     </entry>
