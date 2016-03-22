@@ -346,7 +346,7 @@ class BillingRepository
     public function createPaymentToken($billableId, $customerId = null, $cardInfo, $cardReference, $default = false)
     {
         if (empty($billableId) && empty($customerId) && empty($cardInfo) && empty($cardReference)) {
-            throw new (\Exception('Please provide the required data billableId, customerId, cardInfo and cardReference'));
+            throw new \Exception('billableId, customerId, cardInfo and cardReference is required.');
         }
 
         $paymentTokenCount = PaymentToken::where('billable_id')->count();
@@ -396,7 +396,10 @@ class BillingRepository
             ]
         ];
 
-        $paymentToken = PaymentToken::where('token', $cardReference)->first();
+        $paymentToken = PaymentToken::where('token', $cardReference)
+            ->('billable_id', $billableId)
+            ->('custoemr_id', $customerId)
+            ->first();
         if (empty($paymentToken)) {
             try {
                 $paymentToken = PaymentToken::create([
@@ -417,6 +420,7 @@ class BillingRepository
         } else {
             try {
                 $paymentToken->extended_attributes = $extendedAttributes;
+                $paymentToken->is_default          = $default,
                 $paymentToken->brand               = $card->getBrand();
                 $paymentToken->billable_id         = $billableId;
                 $paymentToken->customer_id         = $customerId;
