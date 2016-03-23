@@ -10,6 +10,7 @@ namespace Anthonyumpad\Billing\Repositories;
 
 use Anthonyumpad\Billing\Models\Customer;
 use Anthonyumpad\Billing\Models\Gateway;
+use Anthonyumpad\Billing\Models\Payment;
 use Anthonyumpad\Billing\Models\PaymentToken;
 use Anthonyumpad\Billing\Models\Subscription;
 use Anthonyumpad\Billing\Events\Customer\Create   as CustomerCreate;
