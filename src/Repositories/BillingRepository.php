@@ -732,9 +732,8 @@ class BillingRepository
             if (empty($paymentToken)) {
                 throw new \Exception('Cannot get payment token data.');
             }
-            $payment_method                         = Payment::METHOD_CARD_TOKEN;
+            $payment_method                        = Payment::METHOD_CARD_TOKEN;
             $purchaseOptions['cardReference']      = $cardReference;
-            $purchaseOptions['customerReference']  = $customer->token;
         }
 
         //Create Payment object here
@@ -771,15 +770,12 @@ class BillingRepository
                 Event::fire(new CardCreate($billableId, $paymentToken->id));
             }
             //update payment status
-            $txn_ref                         = $response->getTransactionReference();
+            $txnRef                          = $response->getTransactionReference();
             $response_data                   = $response->getData();
-            $payment->gateway_id             = (! empty($response_data['payment']['gateway_id'])) ? $response_data['payment']['gateway_id'] : '';
-            $payment->paymenttoken_id        = (isset($paymentToken->id)) ? $paymentToken->id : null;
-            $payment->transaction_reference  = $txn_ref;
+            $payment->transaction_reference  = $txnRef;
             $extended_attributes             = $payment->extended_attributes;
             $extended_attributes['response'] = $response_data;
             $payment->amount_usd             = (! empty($response_data['payment']['product']['price_USD'])) ? $response_data['payment']['product']['price_USD'] : null;
-            $payment->transaction_seq        = (! empty($response_data['payment']['transaction_seq'])) ? $response_data['payment']['transaction_seq'] : null;
             $payment->extended_attributes    = $extended_attributes;
             $payment->status                 = Payment::SUCCESS;
             $payment->save();
