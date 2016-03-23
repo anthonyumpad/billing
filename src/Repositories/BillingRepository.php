@@ -668,8 +668,7 @@ class BillingRepository
         }
 
         $cardReference  = (! empty($purchaseDetails['cardReference'])) ? $purchaseDetails['cardReference'] : '';
-        $cardInfo       = (! empty($purchaseDetails['card_info']))     ? $purchaseDetails['card_info']     : [];
-        $chargeData     = (! empty($purchaseDetails['purchaseData']))  ? $purchaseDetails['purchaseData']  : null;
+        $cardInfo       = (! empty($purchaseDetails['card']))          ? $purchaseDetails['card']          : [];
         $payment_method = null;
 
         $gateway_id = null;
