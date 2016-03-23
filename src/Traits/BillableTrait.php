@@ -231,10 +231,10 @@ trait BillableTrait
      *
      * @throws \Exception
      */
-    public function purchase($billableId, $puchaseDetails, $gateway = null)
+    public function purchase($billableId, $purchaseDetails, $gateway = null)
     {
         try {
-            $payment = $this->purchase($billableId, $puchaseDetails, $gateway);
+            $payment = $this->billingRepository->purchase($billableId, $purchaseDetails, $gateway);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }
@@ -256,7 +256,7 @@ trait BillableTrait
     public function refund($transactionReference, $amount, $gateway)
     {
         try {
-            $refund = $this->purchase($transactionReference, $amount, $gateway);
+            $refund = $this->billingRepository->refund($transactionReference, $amount, $gateway);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }
