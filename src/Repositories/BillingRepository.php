@@ -741,7 +741,7 @@ class BillingRepository
         $payment                        = new Payment();
         $payment->billable_id           = $billableId;
         $payment->chargeable_id         = $packageId;
-        $payment->paymenttoken_id       = (! empty($paymentToken->id))    ? $paymentToken->id   : null;
+        $payment->paymenttoken_id       = (! empty($paymentToken))    ? $paymentToken->id   : null;
         $payment->gateway_id            = $customer->gateway_id;
         $payment->amount                = $amount;
         $payment->amount_not_refunded   = $amount;
