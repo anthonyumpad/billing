@@ -13,6 +13,8 @@ use Anthonyumpad\Billing\Models\Gateway;
 use Anthonyumpad\Billing\Models\Payment;
 use Anthonyumpad\Billing\Models\PaymentToken;
 use Anthonyumpad\Billing\Models\Subscription;
+use Anthonyumpad\Billing\Events\Charge\Success    as ChargeSuccess;
+use Anthonyumpad\Billing\Events\Charge\Failed     as ChargeFailed;
 use Anthonyumpad\Billing\Events\Customer\Create   as CustomerCreate;
 use Anthonyumpad\Billing\Events\Customer\Delete   as CustomerDelete;
 use Anthonyumpad\Billing\Events\Card\Create       as CardCreate;
@@ -780,7 +782,7 @@ class BillingRepository
             $payment->status                 = Payment::SUCCESS;
             $payment->save();
 
-            Event::fire(new ChargeSuccess($this->id, $customer->id, $payment->id, $purchaseDetails));
+            Event::fire(new ChargeSuccess($billableId, $customer->id, $payment->id, $purchaseDetails));
 
             return $payment;
         }
@@ -799,7 +801,7 @@ class BillingRepository
         if (empty($response_message)) {
             $response_message = (! empty($response->getMessage())) ? $response->getMessage() : '';
         }
-        Event::fire(new ChargeFailed($this->id, $customer->id, $payment->id, $purchaseDetails));
+        Event::fire(new ChargeFailed($billableId, $customer->id, $payment->id, $purchaseDetails));
         throw new \Exception($response_message, $response_code);
     }
 

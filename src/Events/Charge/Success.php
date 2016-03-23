@@ -20,7 +20,6 @@ class Success extends Event
         $this->billable_id     = $billable_id;
         $this->customer_id     = $customer_id;
         $this->payment_id      = $payment_id;
-        $this->is_subscription = $subscription;
         $this->data            = $data;
     }
 }
