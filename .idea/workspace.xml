@@ -27,8 +27,8 @@
       <file leaf-file-name="BillingRepository.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44362018">
-              <caret line="882" column="8" selection-start-line="882" selection-start-column="8" selection-end-line="882" selection-end-column="8" />
+            <state vertical-scroll-proportion="1.3575667">
+              <caret line="882" column="0" selection-start-line="882" selection-start-column="0" selection-end-line="882" selection-end-column="0" />
               <folding>
                 <element signature="e#6#85#0#PHP" expanded="true" />
                 <element signature="e#133#174#0#PHP" expanded="true" />
@@ -970,8 +970,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44362018">
-          <caret line="882" column="8" selection-start-line="882" selection-start-column="8" selection-end-line="882" selection-end-column="8" />
+        <state vertical-scroll-proportion="1.3575667">
+          <caret line="882" column="0" selection-start-line="882" selection-start-column="0" selection-end-line="882" selection-end-column="0" />
           <folding>
             <element signature="e#6#85#0#PHP" expanded="true" />
             <element signature="e#133#174#0#PHP" expanded="true" />
