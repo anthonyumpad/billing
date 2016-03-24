@@ -878,7 +878,9 @@ class BillingRepository
             throw new \Exception($e->getMessage(), $e->getCode());
         }
 
-
+        $attrs                            = ['response' => $response->getData()];
+        $refund->extended_attributes      = $attrs;
+        
         if ($response->isSuccessful()) {
 
             // Adjust the purchase transaction to record the non refunded amount
