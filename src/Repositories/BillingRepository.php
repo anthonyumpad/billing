@@ -862,7 +862,6 @@ class BillingRepository
                 'amount'                => $refund_amount,
                 'service'               => $transaction->service,
                 'transaction_date'      => new \DateTime,
-                'transaction_reference' => $response->getTransactionReference(),
                 'transaction_details'   => 'Refund of transaction ID ' . $transaction->transaction_reference,
                 'status'                => Refund::PENDING
             ]);
