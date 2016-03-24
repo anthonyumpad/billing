@@ -25,6 +25,7 @@ class Payment extends \Illuminate\Database\Eloquent\Model
     const DECLINED            = 'DECLINED';
     const ERROR               = 'ERROR';
     const REFUNDED            = 'REFUNDED';
+    const PARTIALLY_REFUNDED  = 'PARTIALLY_REFUNDED';
     const PROCESSING          = 'PROCESSING';
     const PENDING             = 'PENDING';
     const SUCCESS             = 'SUCCESS';

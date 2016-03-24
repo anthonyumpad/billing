@@ -760,7 +760,7 @@ class BillingRepository
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());
         }
-        
+
         try {
             $response = $gateway->purchase($purchaseOptions)->send();
         } catch (\Exception $e) {
@@ -852,42 +852,51 @@ class BillingRepository
             $refund_amount = $amount;
         }
 
-        $response = $gateway->refund(array(
-            'amount'                   => number_format($refund_amount, 2, '.', ''),
-            'transactionReference'     => $transaction->transaction_reference,
-        ))->send();
+        // Save a refund transaction in the database.
+        try {
+            $refund = Refund::create([
+                'billable_id'           => $billable->id,
+                'chargeable_id'         => $transaction->chargeable_id,
+                'payment_id'            => $transaction->id,
+                'paymenttoken_id'       => $transaction->paymenttoken_id,
+                'gateway_id'            => $transaction->gateway_id,
+                'amount'                => $refund_amount,
+                'service'               => $transaction->service,
+                'transaction_date'      => new \DateTime,
+                'transaction_reference' => $response->getTransactionReference(),
+                'transaction_details'   => 'Refund of transaction ID ' . $transaction->transaction_reference,
+                'status'                => Refund::PENDING
+            ]);
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
 
-        $billable = $this;
+        try {
+            $response = $gateway->refund(array(
+                'amount'                   => number_format($refund_amount, 2, '.', ''),
+                'transactionReference'     => $transaction->transaction_reference,
+            ))->send();
+        } catch(\Exception $e) {
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
+
 
         if ($response->isSuccessful()) {
 
             // Adjust the purchase transaction to record the non refunded amount
+            $refund->status                   = Refund::SUCCESS;
             $remaining_amount                 = $transaction->amount_not_refunded - $refund_amount;
-            $transaction->status              = ($remaining_amount == 0) ? Payment::REFUNDED : Payment::PARTIAL;
+            $transaction->status              = ($remaining_amount == 0) ? Payment::REFUNDED : Payment::PARTIALLY_REFUNDED;
             $transaction->amount_not_refunded = $remaining_amount;
             $transaction->save();
-
-            // Save a refund transaction in the database.
-            try {
-                $refund = Refund::create([
-                    'billable_id' => $billable->id,
-                    'chargeable_id' => $transaction->chargeable_id,
-                    'payment_id' => $transaction->id,
-                    'paymenttoken_id' => $transaction->paymenttoken_id,
-                    'gateway_id' => $transaction->gateway_id,
-                    'amount' => $refund_amount,
-                    'service' => $transaction->service,
-                    'transaction_date' => new \DateTime,
-                    'transaction_reference' => $response->getTransactionReference(),
-                    'transaction_details' => 'Refund of transaction ID ' . $transaction->transaction_reference,
-                    'status' => Refund::SUCCESS
-                ]);
-            } catch(\Exception $e) {
-                throw new \Exception($e->getMessage(), $e->getCode());
-            }
+            $refund->save();
+            
             Event::fire(new RefundSuccess($refund->id));
             return $response;
         }
+
+        $refund->status = Refund::ERROR;
+        $refund->save();
 
         Event::fire(new RefundFailed($transaction->id));
         throw new \Exception($response->getMessage());

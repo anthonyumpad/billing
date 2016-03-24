@@ -21,8 +21,10 @@ class Refund extends \Illuminate\Database\Eloquent\Model
 
     const COMPLETED   = 'COMPLETED';
     const CANCELLED   = 'CANCELLED';
+    const ERROR       = 'ERROR';
     const PENDING     = 'PENDING';
     const SUCCESS     = 'SUCCESS';
+    const PARTIAL     = 'PARTIAL';
 
     public $fillable = [
         'chargeable_id',
