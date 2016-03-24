@@ -253,7 +253,7 @@ trait BillableTrait
      *
      * @throws \Exception
      */
-    public function refund($transactionReference, $amount, $gateway)
+    public function refund($transactionReference, $amount = null, $gateway = null)
     {
         try {
             $refund = $this->billingRepository->refund($transactionReference, $amount, $gateway);
