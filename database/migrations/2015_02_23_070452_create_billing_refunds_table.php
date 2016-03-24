@@ -18,7 +18,7 @@ class CreateBillingRefundsTable extends Migration {
             $table->integer('chargeable_id')->unsigned()->nullable();
             $table->integer('billable_id')->unsigned();
             $table->integer('payment_id')->unsigned();
-            $table->integer('paymenttoken_id')->unsigned()->nullable;
+            $table->integer('paymenttoken_id')->unsigned()->nullable();
             $table->integer('gateway_id')->unsigned();
             $table->decimal('amount', 10,2)->default('0.00');
             $table->string('service', 254)->nullable();
