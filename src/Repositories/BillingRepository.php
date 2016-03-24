@@ -836,8 +836,7 @@ class BillingRepository
             throw new \Exception('Cannot get default gateway.');
         }
 
-        $gateway_id = $gateway->model->id;
-
+        $gateway_id  = $gateway->model->id;
         $transaction = Payment::where('transaction_reference', $transactionReference)
             ->where('gateway_id', $gateway_id)
             ->first();
@@ -890,9 +889,9 @@ class BillingRepository
             $transaction->amount_not_refunded = $remaining_amount;
             $transaction->save();
             $refund->save();
-            
+
             Event::fire(new RefundSuccess($refund->id));
-            return $response;
+            return $refund;
         }
 
         $refund->status = Refund::ERROR;
