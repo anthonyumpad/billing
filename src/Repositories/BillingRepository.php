@@ -12,6 +12,7 @@ use Anthonyumpad\Billing\Models\Customer;
 use Anthonyumpad\Billing\Models\Gateway;
 use Anthonyumpad\Billing\Models\Payment;
 use Anthonyumpad\Billing\Models\PaymentToken;
+use Anthonyumpad\Billing\Models\Refund;
 use Anthonyumpad\Billing\Models\Subscription;
 use Anthonyumpad\Billing\Events\Charge\Success    as ChargeSuccess;
 use Anthonyumpad\Billing\Events\Charge\Failed     as ChargeFailed;
@@ -19,6 +20,8 @@ use Anthonyumpad\Billing\Events\Customer\Create   as CustomerCreate;
 use Anthonyumpad\Billing\Events\Customer\Delete   as CustomerDelete;
 use Anthonyumpad\Billing\Events\Card\Create       as CardCreate;
 use Anthonyumpad\Billing\Events\Card\Delete       as CardDelete;
+use Anthonyumpad\Billing\Events\Refund\Success    as RefundSuccess;
+use Anthonyumpad\Billing\Events\Refund\Failed     as RefundFailed;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\CreditCard;
 use Illuminate\Support\Facades\Event;
@@ -738,22 +741,26 @@ class BillingRepository
             $purchaseOptions['cardReference']      = $cardReference;
         }
 
-        //Create Payment object here
-        $payment                        = new Payment();
-        $payment->billable_id           = $billableId;
-        $payment->chargeable_id         = $packageId;
-        $payment->paymenttoken_id       = (! empty($paymentToken))    ? $paymentToken->id   : null;
-        $payment->gateway_id            = $customer->gateway_id;
-        $payment->amount                = $amount;
-        $payment->amount_not_refunded   = $amount;
-        $payment->method                = $payment_method;
-        $payment->currency              = $currency;
-        $payment->transaction_date      = new \DateTime();
-        $payment->transaction_details   = $description;
-        $payment->status                = Payment::PENDING;
-        $payment->extended_attributes   = ['request_data' => $purchaseOptions];
-        $payment->save();
-
+        try {
+            //Create Payment object here
+            $payment                        = new Payment();
+            $payment->billable_id           = $billableId;
+            $payment->chargeable_id         = $packageId;
+            $payment->paymenttoken_id       = (! empty($paymentToken))    ? $paymentToken->id   : null;
+            $payment->gateway_id            = $customer->gateway_id;
+            $payment->amount                = $amount;
+            $payment->amount_not_refunded   = $amount;
+            $payment->method                = $payment_method;
+            $payment->currency              = $currency;
+            $payment->transaction_date      = new \DateTime();
+            $payment->transaction_details   = $description;
+            $payment->status                = Payment::PENDING;
+            $payment->extended_attributes   = ['request_data' => $purchaseOptions];
+            $payment->save();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
+        
         try {
             $response = $gateway->purchase($purchaseOptions)->send();
         } catch (\Exception $e) {
@@ -861,25 +868,28 @@ class BillingRepository
             $transaction->save();
 
             // Save a refund transaction in the database.
-            $response = Refund::create([
-                'billable_id'           => $billable->id,
-                'chargeable_id'         => $transaction->chargeable_id,
-                'payment_id'            => $transaction->id,
-                'paymenttoken_id'       => $transaction->paymenttoken_id,
-                'gateway_id'            => $transaction->gateway_id,
-                'amount'                => $refund_amount,
-                'service'               => $transaction->service,
-                'transaction_date'      => new \DateTime,
-                'transaction_reference' => $response->getTransactionReference(),
-                'transaction_details'   => 'Refund of transaction ID ' . $transaction->transaction_reference,
-                'status'                => Refund::COMPLETED,
-            ]);
-
-            Event::fire(new RefundSuccess($response->id));
+            try {
+                $refund = Refund::create([
+                    'billable_id' => $billable->id,
+                    'chargeable_id' => $transaction->chargeable_id,
+                    'payment_id' => $transaction->id,
+                    'paymenttoken_id' => $transaction->paymenttoken_id,
+                    'gateway_id' => $transaction->gateway_id,
+                    'amount' => $refund_amount,
+                    'service' => $transaction->service,
+                    'transaction_date' => new \DateTime,
+                    'transaction_reference' => $response->getTransactionReference(),
+                    'transaction_details' => 'Refund of transaction ID ' . $transaction->transaction_reference,
+                    'status' => Refund::SUCCESS
+                ]);
+            } catch(\Exception $e) {
+                throw new \Exception($e->getMessage(), $e->getCode());
+            }
+            Event::fire(new RefundSuccess($refund->id));
             return $response;
         }
 
-        Event::fire(new RefundFailed($response->id));
+        Event::fire(new RefundFailed($transaction->id));
         throw new \Exception($response->getMessage());
     }
 }
