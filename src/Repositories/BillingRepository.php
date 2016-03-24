@@ -854,7 +854,7 @@ class BillingRepository
         // Save a refund transaction in the database.
         try {
             $refund = Refund::create([
-                'billable_id'           => $billable->id,
+                'billable_id'           => $transaction->billable_id,
                 'chargeable_id'         => $transaction->chargeable_id,
                 'payment_id'            => $transaction->id,
                 'paymenttoken_id'       => $transaction->paymenttoken_id,
