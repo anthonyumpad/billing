@@ -781,6 +781,7 @@ class BillingRepository
             //update payment status
             $txnRef                          = $response->getTransactionReference();
             $response_data                   = $response->getData();
+            $payment->paymenttoken_id        = $paymentToken->id;
             $payment->transaction_reference  = $txnRef;
             $extended_attributes             = $payment->extended_attributes;
             $extended_attributes['response'] = $response_data;
