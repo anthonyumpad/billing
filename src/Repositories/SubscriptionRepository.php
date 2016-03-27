@@ -105,10 +105,10 @@ class SubscriptionRepository
             if (empty($subscription)) {
                 return Subscription::create([
                     'billable_id'       => $billableId,
-                    'chargeable_id'     => (! empty($data['packageId'])) ? $data['packageId'] : '',
+                    'chargeable_id'     => (! empty($data['packageId'])) ? $data['packageId'] : null,
                     'customer_id'       => $paymentToken->customer_id,
                     'paymenttoken_id'   => $paymentToken->id,
-                    'amount'            => (! empty($data['amount']))   ? $data['amount']   : '',
+                    'amount'            => (! empty($data['amount']))   ? $data['amount']   : 0.00,
                     'currency'          => (! empty($data['currency'])) ? $data['currency'] : 'USD',
                     'ran'               => 0,
                     'interval'          => $interval,
@@ -117,6 +117,7 @@ class SubscriptionRepository
                     'next_attempt'      => $nextAttempt,
                     'last_attempt'      => null,
                     'defaulted'         => false,
+                    'status'            => Subscription::ACTIVE,
                     'data'              => $data
                 ]);
             } else {
@@ -135,7 +136,7 @@ class SubscriptionRepository
         } catch (\Exception $e) {
             throw new \Exception ($e->getMessage(), $e->getCode());
         }
-        
+
         return $subscription;
     }
 
