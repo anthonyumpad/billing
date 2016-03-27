@@ -803,8 +803,8 @@ class BillingRepository
 
         $response_data    = $response->getData();
         $error            = (isset($response_data['error'])) ? $response_data['error'] : [];
-        $response_message = (!empty($error['message'])) ? $error['message'] : '';
-        $response_code    = (!empty($error['code']))    ? $error['code']    : 0;
+        $response_message = (! empty($error['message'])) ? $error['message'] : 'Gateway purchase error';
+        $response_code    = (! empty($error['code']))    ? $error['code']    : 0;
 
         if (empty($response_message)) {
             $response_message = (! empty($response->getMessage())) ? $response->getMessage() : '';
