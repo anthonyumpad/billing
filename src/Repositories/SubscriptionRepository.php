@@ -93,9 +93,10 @@ class SubscriptionRepository
             throw new \Exception('Interval value should be greater than 0.');
         }
 
-        $subscription = Subscription::where('billableId', $billableId)
+        $subscription = Subscription::where('billable_id', $billableId)
             ->where('status', Subscription::ACTIVE)
             ->first();
+
 
         if (is_null($nextAttempt)) {
             $nextAttempt = new \DateTime();
@@ -104,7 +105,7 @@ class SubscriptionRepository
 
         try {
             if (empty($subscription)) {
-                return Subscription::create([
+                $subscription = Subscription::create([
                     'billable_id'       => $billableId,
                     'chargeable_id'     => (! empty($data['packageId'])) ? $data['packageId'] : null,
                     'customer_id'       => $paymentToken->customer_id,

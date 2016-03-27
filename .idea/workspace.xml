@@ -90,8 +90,8 @@
       <file leaf-file-name="SubscriptionRepository.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77893174">
-              <caret line="117" column="56" selection-start-line="117" selection-start-column="56" selection-end-line="117" selection-end-column="56" />
+            <state vertical-scroll-proportion="-0.6320475">
+              <caret line="95" column="56" selection-start-line="95" selection-start-column="56" selection-end-line="95" selection-end-column="56" />
               <folding>
                 <element signature="e#138#178#0#PHP" expanded="true" />
               </folding>
@@ -974,8 +974,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77893174">
-          <caret line="117" column="56" selection-start-line="117" selection-start-column="56" selection-end-line="117" selection-end-column="56" />
+        <state vertical-scroll-proportion="-0.6320475">
+          <caret line="95" column="56" selection-start-line="95" selection-start-column="56" selection-end-line="95" selection-end-column="56" />
           <folding>
             <element signature="e#138#178#0#PHP" expanded="true" />
           </folding>
