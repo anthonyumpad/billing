@@ -98,14 +98,18 @@ class BillingRepository
         $customer_reference   = $response->getCustomerReference();
         $extended_attributes  = $response->getData();
 
-        $newCustomer = Customer::create([
-            'gateway_id'            => $gateway_id,
-            'billable_id'           => $billableId,
-            'token'                 => $customer_reference,
-            'extended_attributes'   => $extended_attributes,
-            'created_by'            => (! empty($customerData['createdBy'])) ? $customerData['createdBy'] : 'system',
-            'updated_by'            => (! empty($customerData['updatedBy'])) ? $customerData['updatedBy'] : 'system',
-        ]);
+        try {
+            $newCustomer = Customer::create([
+                'gateway_id'            => $gateway_id,
+                'billable_id'           => $billableId,
+                'token'                 => $customer_reference,
+                'extended_attributes'   => $extended_attributes,
+                'created_by'            => (! empty($customerData['createdBy'])) ? $customerData['createdBy'] : 'system',
+                'updated_by'            => (! empty($customerData['updatedBy'])) ? $customerData['updatedBy'] : 'system',
+            ]);
+        } catch (\Exception $e) {
+            throw new \Exception ($e->getMessage(), $e->getCode());
+        }
 
         Event::fire(new CustomerCreate($billableId, $newCustomer->id));
         return $newCustomer;
@@ -406,8 +410,9 @@ class BillingRepository
             ->where('billable_id', $billableId)
             ->where('customer_id', $customerId)
             ->first();
-        if (empty($paymentToken)) {
-            try {
+
+        try {
+            if (empty($paymentToken)) {
                 $paymentToken = PaymentToken::create([
                     'token'       => $cardReference,
                     'billable_id' => $billableId,
@@ -420,11 +425,7 @@ class BillingRepository
                     'created_by'          => (!empty($cardInfo['createdBy'])) ? $cardInfo['createdBy'] : 'system',
                     'updated_by'          => (!empty($cardInfo['updatedBy'])) ? $cardInfo['updatedBy'] : 'system',
                 ]);
-            } catch (\Exception $e) {
-                throw new \Exception ($e->getMessage(), $e->getCode());
-            }
-        } else {
-            try {
+            } else {
                 $paymentToken->extended_attributes = $extendedAttributes;
                 $paymentToken->is_default          = $default;
                 $paymentToken->brand               = $card->getBrand();
@@ -433,9 +434,9 @@ class BillingRepository
                 $paymentToken->start_date          = new \DateTime();
                 $paymentToken->expiry_date         = new \DateTime($lastDate);
                 $paymentToken->save();
-            } catch (\Exception $e) {
-                throw new \Exception ($e->getMessage(), $e->getCode());
             }
+        } catch (\Exception $e) {
+            throw new \Exception ($e->getMessage(), $e->getCode());
         }
 
         return $paymentToken;

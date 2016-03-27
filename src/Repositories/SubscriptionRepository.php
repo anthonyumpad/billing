@@ -101,37 +101,41 @@ class SubscriptionRepository
             $nextAttempt = new \DateTime('+' . $interval . ' ' . $intervalType);
         }
 
-        if (empty($subscription)) {
-            return $this->recurring()->create([
-                'billable_id'       => $billableId,
-                'chargeable_id'     => (! empty($data['packageId'])) ? $data['packageId'] : '',
-                'customer_id'       => $paymentToken->customer_id,
-                'paymenttoken_id'   => $paymentToken->id,
-                'amount'            => (! empty($data['amount']))   ? $data['amount']   : '',
-                'currency'          => (! empty($data['currency'])) ? $data['currency'] : 'USD',
-                'ran'               => 0,
-                'interval'          => $interval,
-                'interval_type'     => $intervalType,
-                'failed_attempts'   => 0,
-                'next_attempt'      => $nextAttempt,
-                'last_attempt'      => null,
-                'defaulted'         => false,
-                'data'              => $data
-            ]);
-        } else {
-            $subscription->customer_id      = $paymentToken->customer_id;
-            $subscription->chargeable_id    = (! empty($data['packageId'])) ? $data['packageId'] : '';
-            $subscription->paymenttoken_id  = $paymentToken->id;
-            $subscription->amount           = (! empty($data['amount']))   ? $data['amount'] : '';
-            $subscription->currency         = (! empty($data['currency'])) ? $data['currency'] : 'USD';
-            $subscription->interval         = $interval;
-            $subscription->interval_type    = $intervalType;
-            $subscription->next_attempt     = $nextAttempt;
-            $subscription->defaulted        = false;
-            $subscription->data             = $data;
-            $subscription->save();
+        try {
+            if (empty($subscription)) {
+                return Subscription::create([
+                    'billable_id'       => $billableId,
+                    'chargeable_id'     => (! empty($data['packageId'])) ? $data['packageId'] : '',
+                    'customer_id'       => $paymentToken->customer_id,
+                    'paymenttoken_id'   => $paymentToken->id,
+                    'amount'            => (! empty($data['amount']))   ? $data['amount']   : '',
+                    'currency'          => (! empty($data['currency'])) ? $data['currency'] : 'USD',
+                    'ran'               => 0,
+                    'interval'          => $interval,
+                    'interval_type'     => $intervalType,
+                    'failed_attempts'   => 0,
+                    'next_attempt'      => $nextAttempt,
+                    'last_attempt'      => null,
+                    'defaulted'         => false,
+                    'data'              => $data
+                ]);
+            } else {
+                $subscription->customer_id      = $paymentToken->customer_id;
+                $subscription->chargeable_id    = (! empty($data['packageId'])) ? $data['packageId'] : '';
+                $subscription->paymenttoken_id  = $paymentToken->id;
+                $subscription->amount           = (! empty($data['amount']))   ? $data['amount'] : '';
+                $subscription->currency         = (! empty($data['currency'])) ? $data['currency'] : 'USD';
+                $subscription->interval         = $interval;
+                $subscription->interval_type    = $intervalType;
+                $subscription->next_attempt     = $nextAttempt;
+                $subscription->defaulted        = false;
+                $subscription->data             = $data;
+                $subscription->save();
+            }
+        } catch (\Exception $e) {
+            throw new \Exception ($e->getMessage(), $e->getCode());
         }
-
+        
         return $subscription;
     }
 
