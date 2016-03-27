@@ -24,11 +24,14 @@ use Anthonyumpad\Billing\Events\Charge\Failed  as ChargeFailed;
 class SubscriptionRepository
 {
     protected $intervalTypeCode = [
-        'DAY'   => 'D',
-        'DAYS'  => 'D',
-        'WEEK'  => 'W',
-        'MONTH' => 'M',
-        'YEAR'  => 'Y'
+        'DAY'    => 'D',
+        'DAYS'   => 'D',
+        'WEEK'   => 'W',
+        'WEEKS'  => 'W',
+        'MONTH'  => 'M',
+        'MONTHS' => 'M',
+        'YEAR'   => 'Y',
+        'YEARS'  => 'Y'
     ];
 
     /**
@@ -64,7 +67,7 @@ class SubscriptionRepository
 
         $nextAttempt  = (! empty($subscriptionData['nextAttempt']))   ? $subscriptionData['nextAttempt']  : null;
         $interval     = (! empty($subscriptionData['interval']))      ? $subscriptionData['interval']     : 0;
-        $intervalType = (! empty($subscriptionData['intervalType']))  ? $subscriptionData['intervalType'] : Subscription::DAYS_INTERVAL;
+        $intervalType = (! empty($subscriptionData['intervalType']))  ? strtoupper($subscriptionData['intervalType']) : Subscription::DAYS_INTERVAL;
         $data         = (! empty($subscriptionData['data']))          ? $subscriptionData['data']         : [];
 
         if (empty($interval)
@@ -85,7 +88,7 @@ class SubscriptionRepository
             throw new \Exception('Please provide a subscription data amount, currency, description, packageId and packageName');
         }
 
-        if (! isset($this->intervalTypeCode[strtoupper($intervalType)])) {
+        if (! isset($this->intervalTypeCode[$intervalType])) {
             throw new \Exception('Invalid subscription interval type.');
         }
 
