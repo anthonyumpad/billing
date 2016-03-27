@@ -32,6 +32,18 @@ class SubscriptionRepository
     ];
 
     /**
+     * SubscriptionRepository constructor.
+     *
+     * Injects BillingRepository into SubscriptionRepository
+     *
+     * @param BillingRepository $billingRepository
+     */
+    public function __construct(BillingRepository $billingRepository)
+    {
+        $this->billingRepository  = $billingRepository;
+    }
+
+    /**
      * subscribe
      *
      * This creates a subscription record for the billable object.
@@ -44,7 +56,7 @@ class SubscriptionRepository
      */
     public function subscribe($billableId, $subscriptionData)
     {
-        $paymentToken = $this->getDefaultCard($billableId);
+        $paymentToken = $this->billingRepository->getDefaultCard($billableId);
 
         if (empty($paymentToken)) {
             throw new \Exception('Cannot get default payment token.');
@@ -81,7 +93,7 @@ class SubscriptionRepository
             throw new \Exception('Interval value should be greater than 0.');
         }
 
-        $subscription = Subscription::where('billableId', $this->id)
+        $subscription = Subscription::where('billableId', $billableId)
             ->where('status', Subscription::ACTIVE)
             ->first();
 
