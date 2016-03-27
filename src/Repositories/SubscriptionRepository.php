@@ -162,8 +162,7 @@ class SubscriptionRepository
             if(empty($subscription)) {
                 throw new \Exception('Billable model does not have an active subscription');
             }
-
-            $subscription['is_auto_renew'] = 0;
+            
             $subscription->next_attempt    = '0000-00-00 00:00:00';
             $subscription->status          = Subscription::CANCELLED;
             $subscription->save();
