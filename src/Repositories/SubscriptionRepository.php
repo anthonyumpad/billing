@@ -52,8 +52,14 @@ class SubscriptionRepository
 
         $nextAttempt  = (! empty($subscriptionData['nextAttempt']))   ? $subscriptionData['nextAttempt']  : null;
         $interval     = (! empty($subscriptionData['interval']))      ? $subscriptionData['interval']     : 0;
-        $intervalType = (! empty($subscriptionData['intervalType']))  ? $subscriptionData['intervalType'] : null;
+        $intervalType = (! empty($subscriptionData['intervalType']))  ? $subscriptionData['intervalType'] : Subscription::DAYS_INTERVAL;
         $data         = (! empty($subscriptionData['data']))          ? $subscriptionData['data']         : [];
+
+        if (empty($nextAttempt) ||
+            empty($interval)
+        ) {
+            throw new \Exception('Please provide next attempt date and interval');
+        }
 
         if (empty($data)) {
             throw new \Exception('Please provide the subscription data.');
