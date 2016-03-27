@@ -23,12 +23,12 @@ use Anthonyumpad\Billing\Events\Charge\Failed  as ChargeFailed;
  */
 class SubscriptionRepository
 {
-    protected $intervalTypes = [
-        'DAY'   => 1,
-        'DAYS'  => 1,
-        'WEEK'  => 1,
-        'MONTH' => 1,
-        'YEAR'  =>1
+    protected $intervalTypeCode = [
+        'DAY'   => 'D',
+        'DAYS'  => 'D',
+        'WEEK'  => 'W',
+        'MONTH' => 'M',
+        'YEAR'  => 'Y'
     ];
 
     /**
@@ -85,7 +85,7 @@ class SubscriptionRepository
             throw new \Exception('Please provide a subscription data amount, currency, description, packageId and packageName');
         }
 
-        if (! isset($this->intervalTypes[strtoupper($intervalType)])) {
+        if (! isset($this->intervalTypeCode[strtoupper($intervalType)])) {
             throw new \Exception('Invalid subscription interval type.');
         }
 
@@ -98,7 +98,8 @@ class SubscriptionRepository
             ->first();
 
         if (is_null($nextAttempt)) {
-            $nextAttempt = new \DateTime('+' . $interval . ' ' . $intervalType);
+            $nextAttempt = new \DateTime();
+            $nextAttempt->add(new \DateInterval('P'.$interval.$this->intervalTypeCode[$intervalType]));
         }
 
         try {
@@ -111,11 +112,10 @@ class SubscriptionRepository
                     'amount'            => (! empty($data['amount']))   ? $data['amount']   : 0.00,
                     'currency'          => (! empty($data['currency'])) ? $data['currency'] : 'USD',
                     'ran'               => 0,
-                    'interval'          => $interval,
+                    'interval'          => (int) $interval,
                     'interval_type'     => $intervalType,
                     'failed_attempts'   => 0,
                     'next_attempt'      => $nextAttempt,
-                    'last_attempt'      => null,
                     'defaulted'         => false,
                     'status'            => Subscription::ACTIVE,
                     'data'              => $data
