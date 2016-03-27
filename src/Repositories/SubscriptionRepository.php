@@ -55,10 +55,9 @@ class SubscriptionRepository
         $intervalType = (! empty($subscriptionData['intervalType']))  ? $subscriptionData['intervalType'] : Subscription::DAYS_INTERVAL;
         $data         = (! empty($subscriptionData['data']))          ? $subscriptionData['data']         : [];
 
-        if (empty($nextAttempt) ||
-            empty($interval)
+        if (empty($interval)
         ) {
-            throw new \Exception('Please provide next attempt date and interval');
+            throw new \Exception('Please provide an interval');
         }
 
         if (empty($data)) {
