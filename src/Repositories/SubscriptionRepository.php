@@ -183,7 +183,7 @@ class SubscriptionRepository
      *
      * @return void
      */
-     public static function autoCharge()
+     public function autoCharge()
      {
          $subscriptions = Subscription::where('next_attempt', '<=', new \DateTime)
              ->where('next_attempt', '!=', '0000-00-00 00:00:00')
