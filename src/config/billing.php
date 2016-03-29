@@ -10,11 +10,7 @@ return [
 
     // Stripe Api Key
     'api_key' => 'Your_Stripe_key',
-
-    // Stripe Gateway URL
-    'test_gateway_url'    => '',
-    'prod_gateway_url'    => '',
-
+    
     // Gateways are used in order.
     'gateways' => ['Stripe'],
 
@@ -23,7 +19,7 @@ return [
     'autocharge_recharge_points' => false,
     'duplicate_payment_time_check_seconds' => 5,
 
-    // Retry Attempts for autocharge before it defaults
+    // Retry Attempts for auto charge before it defaults
     'retry_attempts' => 3,
 
     // Retry intervals in Days

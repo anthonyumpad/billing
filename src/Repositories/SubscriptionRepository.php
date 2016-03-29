@@ -13,6 +13,7 @@ use Anthonyumpad\Billing\Events\Autocharge\Success as AutochargeSuccess;
 use Anthonyumpad\Billing\Events\Autocharge\Failed  as AutochargeFailed;
 use Anthonyumpad\Billing\Events\Autocharge\Retry   as AutochargeRetry;
 use Anthonyumpad\Billing\Events\Autocharge\Defaulted;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class SubscriptionRepository
