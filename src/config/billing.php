@@ -10,7 +10,7 @@ return [
 
     // Stripe Api Key
     'api_key' => 'Your_Stripe_key',
-    
+
     // Gateways are used in order.
     'gateways' => ['Stripe'],
 

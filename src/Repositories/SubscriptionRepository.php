@@ -14,6 +14,7 @@ use Anthonyumpad\Billing\Events\Autocharge\Failed  as AutochargeFailed;
 use Anthonyumpad\Billing\Events\Autocharge\Retry   as AutochargeRetry;
 use Anthonyumpad\Billing\Events\Autocharge\Defaulted;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 
 /**
  * Class SubscriptionRepository
