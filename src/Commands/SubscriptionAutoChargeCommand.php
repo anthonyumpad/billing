@@ -2,9 +2,8 @@
 
 namespace Anthonyumpad\Billing\Commands;
 
-use Anthonyumpad\Billing\Models\Subscription;
 use Illuminate\Console\Command;
-use Anthonyumpad\Billing\Billing;
+use Anthonyumpad\Billing\Facades\Billing;
 
 class SubscriptionAutoChargeCommand extends Command
 {
