@@ -263,16 +263,4 @@ trait BillableTrait
 
         return $refund;
     }
-
-    /**
-     * autoCharge
-     *
-     * This performs the auto-charges for all subscriptions that are due.
-     *
-     * @return void
-     */
-    public function autoCharge()
-    {
-        $this->billingRepository->autoCharge();
-    }
 }
