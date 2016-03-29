@@ -4,7 +4,7 @@ namespace Anthonyumpad\Billing\Commands;
 
 use Anthonyumpad\Billing\Models\Subscription;
 use Illuminate\Console\Command;
-use Anthonyumpad\Billing\Traits\SubscriptionTrait;
+use Anthonyumpad\Billing\Billing;
 
 class SubscriptionAutoChargeCommand extends Command
 {
@@ -40,7 +40,7 @@ class SubscriptionAutoChargeCommand extends Command
      */
     public function fire()
     {
-        SubscriptionTrait::autoCharge();
+        Billing::autocharge();
     }
 
     /**

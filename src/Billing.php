@@ -10,10 +10,8 @@ namespace Anthonyumpad\Billing;
 
 use Anthonyumpad\Billing\Traits\BillableTrait;
 use Anthonyumpad\Billing\Traits\SubscriptionTrait;
-use Anthonyumpad\Billing\Traits\TopupTrait;
 use Anthonyumpad\Billing\Repositories\BillingRepository;
 use Anthonyumpad\Billing\Repositories\SubscriptionRepository;
-use Anthonyumpad\Billing\Repositories\TopupRepository;
 
 /**
  * Class Billing
@@ -24,7 +22,7 @@ use Anthonyumpad\Billing\Repositories\TopupRepository;
  */
 class Billing implements BillingInterface
 {
-    use BillableTrait, SubscriptionTrait, TopupTrait;
+    use BillableTrait, SubscriptionTrait;
 
     /**
      * Constructor
@@ -35,11 +33,10 @@ class Billing implements BillingInterface
      * @param SubscriptionRepository $subscriptionRepository
      * @param TopupRepository $topupRepository
      */
-    public function __construct(BillingRepository $billingRepository, SubscriptionRepository $subscriptionRepository, TopupRepository $topupRepository)
+    public function __construct(BillingRepository $billingRepository, SubscriptionRepository $subscriptionRepository)
     {
 
         $this->billingRepository      = $billingRepository;
         $this->subscriptionRepository = $subscriptionRepository;
-        $this->topupRepository        = $topupRepository;
     }
 }
