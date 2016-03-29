@@ -14,7 +14,7 @@ class SubscriptionAutoChargeCommand extends Command
      *
      * @var string
      */
-    protected $name = 'billing:subscription';
+    protected $name = 'billing:subscription-autocharge';
 
     /**
      * The console command description.
