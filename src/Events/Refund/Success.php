@@ -21,8 +21,8 @@ class Success extends Event
      *
      * @return void
      */
-    public function __construct($refund_id = null)
+    public function __construct($refundId = null)
     {
-        $this->refund_id = $refund_id;
+        $this->refund_id = $refundId;
     }
 }

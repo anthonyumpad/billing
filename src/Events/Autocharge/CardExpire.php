@@ -23,8 +23,8 @@ class CardExpire extends Event
      *
      * @return void
      */
-    public function __construct($subscription_id = null)
+    public function __construct($subscriptionId = null)
     {
-        $this->subscription_id = $recur_id;
+        $this->subscriptionId = $subscriptionId;
     }
 }

@@ -21,8 +21,8 @@ class Failed extends Event
      *
      * @return void
      */
-    public function __construct($payment_id = null)
+    public function __construct($paymentId = null)
     {
-        $this->payment_id = $payment_id;
+        $this->paymentId = $paymentId;
     }
 }

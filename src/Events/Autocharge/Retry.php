@@ -21,8 +21,8 @@ class Retry extends Event
      *
      * @return void
      */
-    public function __construct($subscription_id = null)
+    public function __construct($subscriptionId = null)
     {
-        $this->subscription_id = $subscription_id;
+        $this->subscriptionId = $subscriptionId;
     }
 }

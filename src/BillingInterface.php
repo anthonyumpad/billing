@@ -44,4 +44,6 @@ interface BillingInterface
 
     public function refund($transactionReference, $amount, $gateway);
 
+    public static function autoCharge();
+
 }

@@ -21,8 +21,8 @@ class Defaulted extends Event
      *
      * @return void
      */
-    public function __construct($billable_id  = null)
+    public function __construct($billableId  = null)
     {
-        $this->billable_id = $billable_id;
+        $this->billableId = $billableId;
     }
 }

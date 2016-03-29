@@ -15,11 +15,11 @@ class Success extends Event
 {
     use SerializesModels;
 
-    public function __construct($billable_id = null, $customer_id = null, $payment_id = null, $data = [], $subscription = false)
+    public function __construct($billableId = null, $customerId = null, $paymentId = null, $data = [], $subscription = false)
     {
-        $this->billable_id     = $billable_id;
-        $this->customer_id     = $customer_id;
-        $this->payment_id      = $payment_id;
-        $this->data            = $data;
+        $this->billableId  = $billableId;
+        $this->customerId  = $customerId;
+        $this->paymentId   = $paymentId;
+        $this->data        = $data;
     }
 }

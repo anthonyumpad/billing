@@ -21,9 +21,9 @@ class Success extends Event
      *
      * @return void
      */
-    public function __construct($payment_id = null, $subscription_id = null)
+    public function __construct($paymentId = null, $subscriptionId = null)
     {
-        $this->payment_id       = $payment_id;
-        $this->subscription_id  = $subscription_id;
+        $this->paymentId       = $paymentId;
+        $this->subscriptionId  = $subscriptionId;
     }
 }

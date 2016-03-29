@@ -59,9 +59,7 @@ Update the billing configuration file for Stripe apiKey at billing.php and run t
 Add the following entries to your app/Console/Kernel file in the array "$commands":
 
 ```
-    'anthonyumpad\billing\Commands\SubscriptionCheckCardExpiryCommand'
     'anthonyumpad\billing\Commands\SubscriptionCommand'
-    'anthonyumpad\billing\Commands\TopupCommand'
 ```
 
 In app/Handlers/Events you may want to add some handlers for the specific events fired by the billing service.

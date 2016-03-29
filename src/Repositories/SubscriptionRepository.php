@@ -8,11 +8,11 @@
 
 namespace Anthonyumpad\Billing\Repositories;
 
-use Anthonyumpad\Billing\Models\Payment;
 use Anthonyumpad\Billing\Models\Subscription;
-use Anthonyumpad\Billing\Models\Gateway;
-use Anthonyumpad\Billing\Events\Charge\Success as ChargeSuccess;
-use Anthonyumpad\Billing\Events\Charge\Failed  as ChargeFailed;
+use Anthonyumpad\Billing\Events\Autocharge\Success as AutochargeSuccess;
+use Anthonyumpad\Billing\Events\Autocharge\Failed  as AutochargeFailed;
+use Anthonyumpad\Billing\Events\Autocharge\Retry   as AutochargeRetry;
+use Anthonyumpad\Billing\Events\Autocharge\Defaulted;
 
 /**
  * Class SubscriptionRepository
@@ -162,7 +162,7 @@ class SubscriptionRepository
             if(empty($subscription)) {
                 throw new \Exception('Billable model does not have an active subscription');
             }
-            
+
             $subscription->next_attempt    = '0000-00-00 00:00:00';
             $subscription->status          = Subscription::CANCELLED;
             $subscription->save();
@@ -174,4 +174,67 @@ class SubscriptionRepository
         return true;
 
     }
+
+    /**
+     * Attempt auto-charge for subscriptions that are due.
+     *
+     * This goes through all the subscription data where the next attempt is due
+     * and performs the charge.
+     *
+     * @return void
+     */
+     public static function autochargeAttempt()
+     {
+         $subscriptions = Subscription::where('next_attempt', '<=', new \DateTime)
+             ->where('next_attempt', '!=', '0000-00-00 00:00:00')
+             ->where('defaulted', false)
+             ->where('status', Subscription::ACTIVE)
+             ->with('paymenttoken', 'billable')
+             ->get();
+
+
+         foreach ($subscriptions as $subscription) {
+             $card       = $subscription->paymenttoken;
+             $billable   = $subscription->billable;
+
+             if (empty($subscription->billable_id) && empty($card)) {
+                 continue;
+             }
+
+             try {
+                 $purchaseDetails                   = $subscription->data;
+                 $purchaseDetails['cardReference']  = $card->token;
+
+                 $payment = $this->billingRepository->purchase($subscription->billable_id, $subscription->data);
+                 $ran     = $subscription->ran + 1;
+                 $subscription->update([
+                     'ran'          => $ran,
+                     'last_attempt' => new \DateTime
+                 ]);
+                 $subscription->failed_attempts = 0;
+                 $subscription->save();
+                 Event::fire(new AutochargeSuccess($payment->id, $subscription->id));
+             } catch (\Exception $e) {
+                 if ($subscription->failed_attempts >= Config::get('billing.retry_attempts')) {
+                     $subscription->update([
+                         'defaulted'    => true,
+                         'next_attempt' => null,
+                         'last_attempt' => new \DateTime
+                     ]);
+
+                     Event::fire(new Defaulted($billable->id));
+                 } else {
+                     $intervals = Config::get('billing.retry_interval');
+                     $subscription->update([
+                         'failed_attempts' => $subscription->failed_attempts + 1,
+                         'defaulted'       => false,
+                         'next_attempt'    => new \DateTime('+' . $intervals[$subscription->failed_attempts] . ' days'),
+                         'last_attempt'    => new \DateTime
+                     ]);
+                     Event::fire(new AutochargeRetry($subscription->id));
+                 }
+                 Event::fire(new AutochargeFailed($subscription->id));
+             }
+         }
+     }
 }

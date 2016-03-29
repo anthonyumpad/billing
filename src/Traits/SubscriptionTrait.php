@@ -68,79 +68,14 @@ trait SubscriptionTrait
     }
 
     /**
-     * Attempt Recurring Payments
+     * autoCharge
      *
-     * This goes through all the recurring data where the next attempt is defined
-     * and performs the charge.
+     * This performs the auto-charges for all subscriptions that are due.
      *
      * @return void
      */
-   /* public static function autochargeAttempt()
+    public static function autoCharge()
     {
-        $recurring = Recurring::where('next_attempt', '<=', new \DateTime)
-            ->where('next_attempt', '!=', '0000-00-00 00:00:00')
-            ->where('agreement_id', null)
-            ->where('defaulted', false)
-            //->where('ran', '!=', 0)
-            ->with('paymenttoken', 'billable')
-            ->get();
-
-        /*Log::info(__CLASS__.':'.__TRAIT__.':'.__FILE__.':'.__LINE__.':'.__FUNCTION__.':'.
-            'Recurring', [
-            'recurring'    => $recurring,
-            'system_date'  => new \DateTime,
-        ]);
-
-        foreach ($recurring as $recur) {
-            $card       = $recur->paymenttoken;
-            $billable   = $recur->billable;
-            $data       = $recur->data;
-
-            /*Log::info(__CLASS__.':'.__TRAIT__.':'.__FILE__.':'.__LINE__.':'.__FUNCTION__.':'.
-                'Recur', [
-                'recur'    => $recur,
-            ]);
-
-            try {
-                $payment = $billable->charge($card, $recur->recurring_amount, $data, null, true);
-                //next_attempt should be handled in the charge success event of the site.
-                $ran = $recur->ran + 1;
-                $recur->update([
-                    'ran'          => $ran,
-                    'last_attempt' => new \DateTime
-                ]);
-
-                $recur->failed_attempts = 0;
-                $recur->save();
-                Event::fire(new RecurringSuccess($payment->id, $recur->id));
-            } catch (\Exception $e) {
-                Log::error(__CLASS__.':'.__TRAIT__.':'.__FILE__.':'.__LINE__.':'.__FUNCTION__.':'.
-                    'Recurring Exception ', [
-                    'message'    => $e->getMessage(),
-                    'code'       => $e->getCode(),
-                ]);
-
-                if ($recur->failed_attempts >= Config::get('billing.retry_attempts')) {
-                    $recur->update([
-                        'defaulted'    => true,
-                        'next_attempt' => null,
-                        'last_attempt' => new \DateTime
-                    ]);
-
-                    Event::fire(new Defaulted($billable->id));
-                } else {
-                    $intervals = Config::get('billing.retry_interval');
-                    $recur->update([
-                        'failed_attempts' => $recur->failed_attempts + 1,
-                        'defaulted'       => false,
-                        'next_attempt'    => new \DateTime('+' . $intervals[$recur->failed_attempts] . ' days'),
-                        'last_attempt'    => new \DateTime
-                    ]);
-                    Event::fire(new Retry($recur->id));
-                }
-                Event::fire(new RecurringFailed($recur->id));
-            }
-        }
-    }*/
-
+        $this->subscriptionRepository->autoCharge();
+    }
 }
