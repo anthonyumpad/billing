@@ -74,7 +74,7 @@ trait SubscriptionTrait
      *
      * @return void
      */
-    public static function autoCharge()
+    public function autoCharge()
     {
         $this->subscriptionRepository->autoCharge();
     }
