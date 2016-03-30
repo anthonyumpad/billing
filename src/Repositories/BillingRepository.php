@@ -757,6 +757,9 @@ class BillingRepository
             $payment->transaction_details   = $description;
             $payment->status                = Payment::PENDING;
             $payment->extended_attributes   = ['request_data' => $purchaseOptions];
+            if (! empty($purchaseDetails['subscription_id'])) {
+                $payment->subscription_id  = $purchaseDetails['subscription_id'];
+            }
             $payment->save();
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), $e->getCode());

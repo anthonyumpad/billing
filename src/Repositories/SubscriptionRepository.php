@@ -204,9 +204,9 @@ class SubscriptionRepository
              }
 
              try {
-                 $purchaseDetails                   = $subscription->data;
-                 $purchaseDetails['cardReference']  = $card->token;
-
+                 $purchaseDetails                    = $subscription->data;
+                 $purchaseDetails['cardReference']   = $card->token;
+                 $purchaseDetails['subscription_id'] = $subscription->id;
                  $payment = $this->billingRepository->purchase($subscription->billable_id, $purchaseDetails);
                  $ran     = $subscription->ran + 1;
                  $subscription->update([
@@ -214,6 +214,9 @@ class SubscriptionRepository
                      'last_attempt' => new \DateTime
                  ]);
                  $subscription->failed_attempts = 0;
+                 $nextAttempt                   = new \DateTime();
+                 $nextAttempt->add(new \DateInterval('P'.$subscription->interval.$this->intervalTypeCode[$subscription->interval_type]));
+                 $subscription->next_attempt    = $nextAttempt;
                  $subscription->save();
                  Event::fire(new AutochargeSuccess($payment->id, $subscription->id));
              } catch (\Exception $e) {
