@@ -668,7 +668,7 @@ class BillingRepository
      * @return Payment
      * @throws \Exception
      */
-    public function purchase($billableId, $purchaseDetails, $gateway)
+    public function purchase($billableId, $purchaseDetails, $gateway = null)
     {
         if (empty($billableId)) {
             throw new \Exception('Empty billable id.');
