@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54a2d9ad-568d-42f6-9865-8f2552a07f8f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Repositories/BillingRepository.php" afterPath="$PROJECT_DIR$/src/Repositories/BillingRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php" afterPath="$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php" />
     </list>
     <ignored path="billing.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BillingRepository.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BillingRepository.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33238232">
-              <caret line="681" column="32" selection-start-line="681" selection-start-column="27" selection-end-line="681" selection-end-column="32" />
+            <state vertical-scroll-proportion="-7.1372547">
+              <caret line="676" column="66" selection-start-line="676" selection-start-column="53" selection-end-line="676" selection-end-column="66" />
               <folding>
                 <element signature="e#6#85#0#PHP" expanded="true" />
                 <element signature="e#133#174#0#PHP" expanded="true" />
@@ -38,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SubscriptionRepository.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SubscriptionRepository.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.36804566">
+              <caret line="209" column="107" selection-start-line="209" selection-start-column="107" selection-end-line="209" selection-end-column="107" />
               <folding>
                 <element signature="e#138#183#0#PHP" expanded="true" />
               </folding>
@@ -189,8 +188,8 @@
         <option value="$PROJECT_DIR$/src/Traits/SubscriptionTrait.php" />
         <option value="$PROJECT_DIR$/src/Traits/BillableTrait.php" />
         <option value="$PROJECT_DIR$/src/config/billing.php" />
-        <option value="$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php" />
         <option value="$PROJECT_DIR$/src/Repositories/BillingRepository.php" />
+        <option value="$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php" />
       </list>
     </option>
   </component>
@@ -839,6 +838,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.230769">
           <caret line="25" column="39" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -902,6 +902,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.8461537">
           <caret line="23" column="66" selection-start-line="23" selection-start-column="52" selection-end-line="23" selection-end-column="66" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -917,6 +918,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47075605">
           <caret line="25" column="47" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -924,6 +926,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47075605">
           <caret line="25" column="47" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -993,23 +996,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+        <state vertical-scroll-proportion="-7.1372547">
+          <caret line="676" column="66" selection-start-line="676" selection-start-column="53" selection-end-line="676" selection-end-column="66" />
           <folding>
-            <element signature="e#138#183#0#PHP" expanded="true" />
+            <element signature="e#6#85#0#PHP" expanded="true" />
+            <element signature="e#133#174#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Repositories/BillingRepository.php">
+    <entry file="file://$PROJECT_DIR$/src/Repositories/SubscriptionRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33238232">
-          <caret line="681" column="32" selection-start-line="681" selection-start-column="27" selection-end-line="681" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.36804566">
+          <caret line="209" column="107" selection-start-line="209" selection-start-column="107" selection-end-line="209" selection-end-column="107" />
           <folding>
-            <element signature="e#6#85#0#PHP" expanded="true" />
-            <element signature="e#133#174#0#PHP" expanded="true" />
+            <element signature="e#138#183#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

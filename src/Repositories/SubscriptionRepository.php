@@ -207,7 +207,7 @@ class SubscriptionRepository
                  $purchaseDetails                   = $subscription->data;
                  $purchaseDetails['cardReference']  = $card->token;
 
-                 $payment = $this->billingRepository->purchase($subscription->billable_id, $subscription->data);
+                 $payment = $this->billingRepository->purchase($subscription->billable_id, $purchaseDetails);
                  $ran     = $subscription->ran + 1;
                  $subscription->update([
                      'ran'          => $ran,
