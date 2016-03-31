@@ -243,8 +243,8 @@ Billable is referred as the primary actor or the customer to your site.
             ]
         ]);
      } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+        echo $e->getMessage();
+     }
     
     // cancel a subscription
     try {
