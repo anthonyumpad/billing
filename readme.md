@@ -1,7 +1,7 @@
 ## Introduction
 
-The functionality of the billing plugin is to provide billing functions against a Billable or the customer object
-and create your own subscriptions and manage your own auto charge for the subscriptions.
+The functionality of the billing plugin is to provide billing functions against a Billable or the customer object.
+You can create your own subscriptions and manage the auto charges for it.
 
 
 ## How To Integrate This To Your Project
@@ -82,7 +82,7 @@ Below are the events that the billing service fires:
 
 ### Example Usage:
 
-Billable is referred as the primary actor or the customer to your site.
+Billable is referred as the primary actor or the customer of your site.
 
 ## Using the Billing Facade
 ```
@@ -256,7 +256,7 @@ Billable is referred as the primary actor or the customer to your site.
 ## Subscription Auto charge command
     
 The Auto charge command can be run through artisan once you've added the command in your Kernel.
-This command will perform all auto charge for the subscriptions that are due.
-You will need to create a CRON job for this command to be executed with your ideal time interval.
+This command will perform all auto charges for the subscriptions that are due.
+You will need to create a CRON job for this command if you want this to run in scheduled intervals.
        
     php artisan billing:subscription-autocharge
