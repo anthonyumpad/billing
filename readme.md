@@ -11,7 +11,7 @@ Add this to your composer.json file:
 ```
     "require" : {
         "omnipay/stripe": "~2.0",
-        "anthonyumpad/billing": "~1.0~"
+        "anthonyumpad/billing": "~1.0"
     },
     "repositories"  : [
         {
