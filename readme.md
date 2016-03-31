@@ -192,11 +192,11 @@ Billable is referred as the primary actor or the customer to your site.
                'billingState'          => 'Singapore',
                'billingPhone'          => '1234567',
            ],
-           'description' => 'Test payment',
+           'description'  => 'Test payment',
            'package_id'   => 1,
            'package_name' => 'TestName',
-           'amount'      => '10.00',
-           'currency'    => 'USD'
+           'amount'       => '10.00',
+           'currency'     => 'USD'
        ]);
     } catch (Exception $e) {
         echo $e->getMessage();
@@ -206,11 +206,11 @@ Billable is referred as the primary actor or the customer to your site.
     try {
         $payment = Billing::purchase($billableId,[
             'cardReference' => 'card_1234xxx',
-            'description' => 'Test card payment',
-            'package_id'   => 2,
-            'package_name' => 'TestName',
-            'amount'      => '11.00',
-            'currency'    => 'USD'
+            'description'   => 'Test card payment',
+            'package_id'    => 2,
+            'package_name'  => 'TestName',
+            'amount'        => '11.00',
+            'currency'      => 'USD'
         ]);
     } catch (Exception $e) {
         echo $e->getMessage();
@@ -235,11 +235,11 @@ Billable is referred as the primary actor or the customer to your site.
             'intervalType'  => 'MONTH',
             'nextAttempt'   => '2016-04-30 00:00:00'
             'data'     => [
-                'amount'       =>  10.00,
-                'currency'     => 'USD',
+                'amount'        =>  10.00,
+                'currency'      => 'USD',
                 'package_name'  => 'Test subscription package',
                 'package_id'    => 2,
-                'description'  => 'Subscription package',
+                'description'   => 'Subscription package',
             ]
         ]);
      } catch (Exception $e) {
