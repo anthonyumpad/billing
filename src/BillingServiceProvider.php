@@ -52,14 +52,13 @@ class BillingServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(DispatcherContract $events)
+    public function boot()
     {
-        parent::boot($events);
-
         // Publish the database migrations
         $this->publishes([
             __DIR__ . '/../database/migrations' => $this->app->databasePath() . '/migrations'
         ], 'migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         $this->publishes([
             __DIR__ . '/../database/seeds' => $this->app->databasePath() . '/seeds'
@@ -90,7 +89,7 @@ class BillingServiceProvider extends ServiceProvider
         );
 
         // Get the gateways registered
-        $this->app['billing.gateways'] = $this->app->share(function ($app) {
+        $this->app->singleton('billing.gateways', function($app){
             $gateways = [];
             $gates = $app['config']['billing.gateways'];
 
@@ -116,7 +115,7 @@ class BillingServiceProvider extends ServiceProvider
         });
 
         // Get the default gateway
-        $this->app['billing.gateway'] = $this->app->share(function ($app) {
+        $this->app->singleton('billing.gateway', function($app){
             $gateways = $app['billing.gateways'];
             foreach ($gateways as $gateway) {
                 // Return the first gateway where the model has is_default set

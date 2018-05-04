@@ -218,7 +218,7 @@ class SubscriptionRepository
                  $nextAttempt->add(new \DateInterval('P'.$subscription->interval.$this->intervalTypeCode[$subscription->interval_type]));
                  $subscription->next_attempt    = $nextAttempt;
                  $subscription->save();
-                 Event::fire(new AutochargeSuccess($payment->id, $subscription->id));
+                 eventfire(new AutochargeSuccess($payment->id, $subscription->id));
              } catch (\Exception $e) {
                  if ($subscription->failed_attempts >= Config::get('billing.retry_attempts')) {
                      $subscription->update([
@@ -227,7 +227,7 @@ class SubscriptionRepository
                          'last_attempt' => new \DateTime
                      ]);
 
-                     Event::fire(new Defaulted($billable->id));
+                     eventfire(new Defaulted($billable->id));
                  } else {
                      $intervals = Config::get('billing.retry_interval');
                      $subscription->update([
@@ -236,9 +236,9 @@ class SubscriptionRepository
                          'next_attempt'    => new \DateTime('+' . $intervals[$subscription->failed_attempts] . ' days'),
                          'last_attempt'    => new \DateTime
                      ]);
-                     Event::fire(new AutochargeRetry($subscription->id));
+                     eventfire(new AutochargeRetry($subscription->id));
                  }
-                 Event::fire(new AutochargeFailed($subscription->id));
+                 eventfire(new AutochargeFailed($subscription->id));
              }
          }
      }

@@ -111,7 +111,7 @@ class BillingRepository
             throw new \Exception ($e->getMessage(), $e->getCode());
         }
 
-        Event::fire(new CustomerCreate($billableId, $newCustomer->id));
+        eventfire(new CustomerCreate($billableId, $newCustomer->id));
         return $newCustomer;
     }
 
@@ -199,7 +199,7 @@ class BillingRepository
 
                     $customer->paymenttokens()->delete();
                     $customer->delete();
-                    Event::fire(new CustomerDelete($billableId, $customer->id));
+                    eventfire(new CustomerDelete($billableId, $customer->id));
                 } catch (\Exception $e) {
                     continue;
                 }
@@ -237,7 +237,7 @@ class BillingRepository
 
         $customer->paymenttokens()->delete();
         $customer->delete();
-        Event::fire(new CustomerDelete($billableId, $customer->id));
+        eventfire(new CustomerDelete($billableId, $customer->id));
         return true;
     }
 
@@ -339,7 +339,7 @@ class BillingRepository
             throw new \Exception ($e->getMessage(), $e->getCode());
         }
 
-        Event::fire(new CardCreate($billableId, $paymentToken->id));
+        eventfire(new CardCreate($billableId, $paymentToken->id));
         return $paymentToken;
     }
 
@@ -594,7 +594,7 @@ class BillingRepository
             return false;
         }
 
-        Event::fire(new CardDelete($billableId, $paymentToken->id));
+        eventfire(new CardDelete($billableId, $paymentToken->id));
         $paymentToken->delete();
 
         // set the last card as default
@@ -780,7 +780,7 @@ class BillingRepository
                     throw new \Exception ($e->getMessage(), $e->getCode());
                 }
 
-                Event::fire(new CardCreate($billableId, $paymentToken->id));
+                eventfire(new CardCreate($billableId, $paymentToken->id));
             }
             //update payment status
             $txnRef                          = $response->getTransactionReference();
@@ -794,7 +794,7 @@ class BillingRepository
             $payment->status                 = Payment::SUCCESS;
             $payment->save();
 
-            Event::fire(new ChargeSuccess($billableId, $customer->id, $payment->id, $purchaseDetails));
+            eventfire(new ChargeSuccess($billableId, $customer->id, $payment->id, $purchaseDetails));
 
             return $payment;
         }
@@ -815,7 +815,7 @@ class BillingRepository
         if (empty($response_message)) {
             $response_message = (! empty($response->getMessage())) ? $response->getMessage() : '';
         }
-        Event::fire(new ChargeFailed($billableId, $customer->id, $payment->id, $purchaseDetails));
+        eventfire(new ChargeFailed($billableId, $customer->id, $payment->id, $purchaseDetails));
         throw new \Exception($response_message, $response_code);
     }
 
@@ -898,14 +898,14 @@ class BillingRepository
             $transaction->save();
             $refund->save();
 
-            Event::fire(new RefundSuccess($refund->id));
+            eventfire(new RefundSuccess($refund->id));
             return $refund;
         }
 
         $refund->status = Refund::ERROR;
         $refund->save();
 
-        Event::fire(new RefundFailed($transaction->id));
+        eventfire(new RefundFailed($transaction->id));
         throw new \Exception($response->getMessage());
     }
 }

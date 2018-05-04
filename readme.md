@@ -11,7 +11,7 @@ Add this to your composer.json file:
 ```
     "require" : {
         "omnipay/stripe": "~2.0",
-        "anthonyumpad/billing": "~1.0"
+        "anthonyumpad/billing": "~1.1"
     },
     "repositories"  : [
         {
@@ -32,7 +32,7 @@ Once that is done, run the composer update command:
 After composer update completes, add these lines to your config/app.php file in the 'providers' array:
 
 ```
-    'anthonyumpad\billing\BillingServiceProvider'
+    \Anthonyumpad\Billing\BillingServiceProvider::class
 ```
 
 ### Publish billing Migrations and Config

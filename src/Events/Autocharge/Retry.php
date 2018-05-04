@@ -5,13 +5,12 @@
 
 namespace Anthonyumpad\Billing\Events\Autocharge;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Autocharge Payment Retry Event
  */
-class Retry extends Event
+class Retry
 {
 
     use SerializesModels;

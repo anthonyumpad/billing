@@ -32,7 +32,7 @@ class GatewaySeeder extends Seeder
         }
 
         $extended_attrs = [
-            'apiKey'	=>	$site_key,
+            'apiKey'	=>	$api_key,
             'apiUrl'	=>  $api_url,
             'testMode'	=>  $test_mode,
         ];

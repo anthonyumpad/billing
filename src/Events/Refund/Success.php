@@ -5,13 +5,12 @@
 
 namespace Anthonyumpad\Billing\Events\Refund;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Refund Success Event
  */
-class Success extends Event
+class Success
 {
 
     use SerializesModels;

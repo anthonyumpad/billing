@@ -4,13 +4,12 @@
  */
 namespace Anthonyumpad\Billing\Events\Card;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Card Create Event
  */
-class Create extends Event
+class Create
 {
 
     use SerializesModels;

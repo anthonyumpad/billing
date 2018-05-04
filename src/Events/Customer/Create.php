@@ -5,13 +5,12 @@
 
 namespace Anthonyumpad\Billing\Events\Customer;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Customer Create Event
  */
-class Create extends Event
+class Create
 {
 
     use SerializesModels;

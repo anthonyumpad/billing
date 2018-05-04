@@ -5,13 +5,12 @@
 
 namespace Anthonyumpad\Billing\Events\Card;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Card Delete Event
  */
-class Delete extends Event
+class Delete
 {
 
     use SerializesModels;

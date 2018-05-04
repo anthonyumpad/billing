@@ -5,13 +5,12 @@
 
 namespace Anthonyumpad\Billing\Events\Charge;
 
-use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Charge Success Event
  */
-class Success extends Event
+class Success
 {
     use SerializesModels;
 
